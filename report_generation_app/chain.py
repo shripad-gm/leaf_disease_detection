@@ -8,7 +8,7 @@ class ReportGenerator:
     def __init__(self):
         self.llm = ChatGroq(
             temperature=0,
-            groq_api_key="ur_api_key",
+            groq_api_key="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",
             model_name="llama3-70b-8192"
         )
         self.solutions = {
