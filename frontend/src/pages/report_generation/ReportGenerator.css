@@ -1,0 +1,284 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&family=Mogra&display=swap');
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-image: url('/bg2.jpg'); /* Add your image path */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+}
+
+.report-container {
+  width: 1400px;
+  margin: 50px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95); /* Slightly more opaque background */
+  border-radius: 15px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 1s ease-in-out;
+  transition: transform 0.3s ease;
+}
+
+.report-container:hover {
+  transform: translateY(-5px);
+}
+
+.title {
+  color: #2c3e50;
+  text-align: center;
+  font-family: "Mogra", serif;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.input-group {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.input-with-mic {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-field {
+  width: 300px;
+  padding: 10px;
+  padding-right: 40px; /* Space for the microphone icon */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.microphone-button {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  background: transparent;
+  border: none;
+  outline: none;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.microphone-button:hover {
+  transform: scale(1.2);
+  color: #4CAF50; /* Change color on hover */
+}
+
+.input-field:focus,
+.dropdown:focus {
+  box-shadow: 0 4px 10px rgba(106, 17, 203, 0.3), 0 0 10px rgba(106, 17, 203, 0.4);
+  transform: scale(1.05);
+}
+
+.dropdown {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  margin-left: 10px;
+  outline: none;
+  background: #f8f9fa;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.generate-button {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-left: 500px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(106, 17, 203, 0.4);
+}
+
+.generate-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(37, 117, 252, 0.5);
+  background: linear-gradient(135deg, #2575fc, #6a11cb);
+}
+
+.generate-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 3px 7px rgba(37, 117, 252, 0.4);
+}
+
+.generate-button.disabled {
+  background: #fffefe;
+  cursor: not-allowed;
+}
+
+.loading-container {
+  display: flex;
+  align-items: center;
+}
+
+.loading-spinner {
+  width: 20px; /* Increased size */
+  height: 20px;
+  border: 4px solid rgba(255, 255, 255, 0.7); /* Brighter border for contrast */
+  border-top-color: rgba(106, 17, 203, 1); /* Vibrant color for visibility */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 10px rgba(106, 17, 203, 0.5); /* Glow effect */
+  margin-right: 10px;
+  position: relative; /* Ensure proper positioning */
+  z-index: 10; /* Keep it above other elements */
+}
+
+.loading-text {
+  font-size: 1rem;
+  color: #2c3e50;
+  font-weight: bold;
+}
+
+.report-box {
+  margin-top: 30px;
+  font-family: "Itim", serif;
+  font-weight: 500;
+  padding: 20px;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 5px 5px 10px rgba(0, 0, 0, 0.527), -5px -5px 10px rgba(255, 255, 255, 0.7);
+  animation: fadeIn 0.5s ease-in-out;
+  position: relative;
+  overflow: visible; /* Ensure content is not clipped */
+  border: 2px solid transparent;
+  transition: box-shadow 0.3s ease;
+  min-height: 200px; /* Optional: Ensure a minimum height */
+  height: auto; /* Automatically adjust height based on content */
+}
+
+.report-box:hover {
+  border-color: rgba(106, 17, 203, 0.3);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.7), 0 0 10px 3px rgba(106, 17, 203, 0.4);
+}
+
+.report-box h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #6a11cb;
+  text-shadow: 0.5px 0.5px 2px rgba(0, 0, 0, 0.1);
+}
+
+.report-textarea {
+  width: 100%;
+  font-size: 1rem;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  resize: none;
+  outline: none;
+  background: #f9f9f9;
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #2c3e50;
+  transition: box-shadow 0.3s ease;
+}
+
+.report-textarea:focus {
+  box-shadow: 0 4px 10px rgba(37, 117, 252, 0.3);
+}
+
+.report-box::before,
+.report-box::after {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: rgba(106, 17, 203, 0.1);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.report-box::before {
+  top: -50px;
+  left: -50px;
+}
+
+.report-box::after {
+  bottom: -50px;
+  right: -50px;
+}
+
+.report-box * {
+  position: relative;
+  z-index: 1;
+}
+
+.download-button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.download-button {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(106, 17, 203, 0.4);
+}
+
+.download-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(37, 117, 252, 0.5);
+  background: linear-gradient(135deg, #2575fc, #6a11cb);
+}
+
+.download-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 3px 7px rgba(37, 117, 252, 0.4);
+}
+
+.voice-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 10px;
+}
+
+.voice-button:hover {
+  background-color: #45a049;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
