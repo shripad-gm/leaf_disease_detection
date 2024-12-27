@@ -1,0 +1,191 @@
+body {
+    background: url("D:\\program\\React Js\\learn React\\Resellient Roots AI\\leaf_disease_detection\\frontend\\src\\assets\\HomeBG.jpg");
+    background-size: cover;
+}
+.main {
+    height: 100vh;
+    background-image: url("./assets/background.jpg.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #333; /* Ensures text is readable on any background */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    height: auto; /* Change from 100% to auto to allow content to adjust */
+    background-color: rgba(255, 255, 255, 0.6); /* Slightly transparent background */
+    padding-bottom: 50px; /* Reduced padding at the bottom to reduce the gap with the footer */
+}
+/* Main AboutPage styling */
+.about-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    flex-grow: 1;
+    overflow: hidden; /* Prevent scrolling */
+    margin-bottom: 0; /* Ensure no extra space is added below */
+}
+
+.team-section {
+    margin-top:5rem;
+    background-color: rgba(234, 244, 242, 0.9); /* Slightly transparent background for team section */
+    padding: 15px; /* Further reduced padding */
+    text-align: center; /* Centering the text horizontally */
+    border-radius: 10px;
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center the content */
+    height:30rem; /* Allow content to determine height */
+    margin-bottom: 10px; /* Reduced margin between team section and footer */
+    flex-grow: 0; /* Don't expand to take extra space */
+    overflow: hidden; /* Prevent overflow */
+}
+
+/* Team Title and Subtitle */
+.team-title {
+    font-size: 26px; /* Reduced font size */
+    color: #2b7a78;
+    margin-bottom: 10px;
+}
+
+.team-subtitle {
+    font-size: 18px; /* Reduced subtitle size */
+    color: #555;
+    margin-bottom: 10px; /* Reduced bottom margin */
+    font-style: italic;
+}
+
+/* Team grid layout with reduced gap between rows */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 members in the first row */
+    gap: 40px; /* Further reduce the gap to 0px */
+    justify-items: center;
+    grid-template-rows: auto auto auto; /* Explicitly defining 3 rows */
+}
+.team-member:nth-child(3) {
+    grid-column: 1 / span 2; /* Make the third member span the entire row (centered) */
+}
+
+.team-member {
+    text-align: center;
+    height:6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.profile-pic-cover {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom:10px;
+}
+
+.profile-pic {
+    width: 30px;  /* Reduced from 60px to 50px */
+    height: 30px; /* Reduced from 60px to 50px */
+    background-color: #b7d3d2;
+    border-radius: 50%;
+    margin-bottom: -20px; /* Reduced margin for smaller circles */
+    
+}
+
+.member-name {
+    font-size: 14px; /* Reduced font size for smaller text */
+    font-weight: bold;
+    color: #333;
+}
+
+.member-role {
+    font-size: 12px; /* Reduced font size for smaller text */
+    color: #666;
+}
+.team-member:nth-child(3) {
+    grid-column: 1 / span 2; /* Make the third member span the entire row (centered) */
+}
+
+.team-member {
+    text-align: center;
+}
+
+.profile-pic {
+    width: 30px;  /* Reduced from 60px to 50px */
+    height: 30px; /* Reduced from 60px to 50px */
+    background-color: #b7d3d2;
+    border-radius: 50%;
+    margin-bottom: -20px; /* Reduced margin for smaller circles */
+}
+
+.member-name {
+    font-size: 14px; /* Reduced font size for smaller text */
+    font-weight: bold;
+    color: #333;
+}
+
+.member-role {
+    font-size: 12px; /* Reduced font size for smaller text */
+    color: #666;
+}
+
+/* About Details Section styling */
+.about-details {
+    padding: 20px; /* Reduced padding */
+    border-radius: 10px;
+    text-align: left; /* Aligns all text to the left */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 50%; /* Takes the remaining width on the right */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center content */
+    height: auto; /* Allow height to adjust to content */
+    margin-bottom: 10px; /* Reduced margin below the about details */
+    font-family: 'Livvic', sans-serif; /* Apply Livvic font to about details */
+    font-size: 22px; /* Font size */
+    font-weight: bold; /* Make text bold */
+    color:rgb(0, 0, 0);
+    text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2); /* Lighter shadow effect */
+}
+
+/* Ensures bullet points are left-aligned */
+.about-details ul {
+    text-align: left; /* Aligns list items to the left */
+    list-style-position: inside; /* Keeps list items inside the container */
+    padding: 0;
+    margin: 0; /* Remove any default margin */
+}
+
+.about-details ul li {
+    margin: 8px 0; /* Reduced gap between list items */
+    font-size: 22px; /* Font size */
+    font-weight: bold; /* Make bullet points bold */
+    text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2); /* Lighter shadow effect for list items */
+}
+
+/* Specific styling for highlighted text in the right box */
+.about-details strong {
+    color: #01860e; /* Change color for Turcicum Leaf Blight */
+    font-weight: bold; /* Ensure the text remains bold */
+    text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2); /* Add subtle shadow for emphasis */
+}
+
+/* Specific styling for highlighted text */
+.about-details ul li strong {
+    color:#01860e;; /* Change color for specified phrases */
+    font-weight: bold; /* Ensure the text remains bold */
+    text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2); /* Maintain lighter shadow */
+}
+
+/* Main AboutPage styling */
+.about-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    flex-grow: 1;
+    overflow: hidden; /* Prevent scrolling */
+    margin-bottom: 0; /* Ensure no extra space is added below */
+}

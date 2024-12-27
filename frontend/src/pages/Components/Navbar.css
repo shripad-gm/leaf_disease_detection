@@ -1,0 +1,41 @@
+.header {
+    display:flex;
+    height:6rem;
+    background-color: rgba(255, 255, 255, 0.419);
+    flex-direction: column;
+    font-size:800;
+    color:black;
+    position:sticky;
+    box-shadow: rgba(0, 0, 0, 0.329) 5px 5px 10px;
+    
+} 
+header h1 {
+    font-size:2rem;
+    padding-left:3.5rem;
+    font-weight: 800;
+
+}
+.left{
+    width:33%;
+    display: flex;
+    justify-content: space-around;
+    font-weight: 300;
+   
+}
+.left a {
+    &:hover {
+        color:rgba(173, 0, 0, 0.605);
+        transition:0.3s;
+    }
+}
+.right {
+    width: 20%;
+    position:relative;
+    right:0;
+}
+.nav {
+    display: flex;
+    margin-top:13px;
+    width:100%;
+    justify-content: space-between;
+}
