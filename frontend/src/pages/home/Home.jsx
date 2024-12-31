@@ -1,4 +1,3 @@
-import LogoutButton from "../../components/LogOutButton";
 import Navbar from "../Components/Navbar";
 import { Link } from "react-router-dom";
 import "./Home.css";
@@ -37,7 +36,7 @@ const Home = () => {
           <div className="WeatherDetect">
             <div className="start">
               <span>
-                <i class="fa-solid fa-cloud"></i>
+                <i className="fa-solid fa-cloud"></i>
               </span>
             </div>
             <div className="mid">

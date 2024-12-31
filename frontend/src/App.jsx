@@ -7,6 +7,7 @@ import {Toaster} from "react-hot-toast"
 import { useAuthContext } from './context/AuthContext'
 import Report from "./pages/report_generation/Report"
 import About from './pages/components/About'
+import DiseaseRecognition from './pages/detect/DiseaseRecognition'
 function App() {
   const {authUser}=useAuthContext();
   return (
@@ -26,6 +27,7 @@ function App() {
   <Route path="/" element= {authUser?<Home/>:<Navigate to="/login"/>}/>
   <Route path="/report" element= {authUser?<Report/>:<Navigate to="/login"/>}/>
   <Route path='/about' element={authUser?<About/>:<Navigate to="/login"/>} />
+  <Route path='/detect' element={authUser?<DiseaseRecognition/>:<Navigate to="/login"/>} />
    
   </Routes> 
   <Toaster/>
