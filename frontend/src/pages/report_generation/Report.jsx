@@ -61,6 +61,7 @@ const ReportGenerator = () => {
   };
 
   return (
+    <div className="bodydiv">
     <div className="report-container">
       <h1 className="title">🌾 Crop Disease Report Generator</h1>
  
@@ -96,6 +97,7 @@ const ReportGenerator = () => {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };
