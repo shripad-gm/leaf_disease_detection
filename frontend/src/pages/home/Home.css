@@ -1,3 +1,61 @@
-#banner{
-    background: url("./HomeBG.jpg");
+#homepg {
+    background:url("./pic3.jpg");
+    color:white;
+    background-size: cover;
+}
+#cards {
+    color:black;
+    &:hover {
+        
+        box-shadow: rgba(0, 0, 0, 0.59) 5px 5px 10px;
+        
+    }
+}
+
+.icondiv i {
+    font-size:5rem;
+}
+.NavigateBtn{
+    height:2rem;
+    width:10rem;
+    background-color: rgb(55, 92, 0);
+    border-radius:5px;
+    color:white;
+&:hover {
+    border:  rgba(55, 92, 0, 0.597) solid 1px;
+    background-color:rgba(255, 255, 255, 0); 
+    box-shadow: rgba(0, 0, 0, 0.244) 5px 4px 10px;
+    color: rgb(55, 92, 0);
+    transition:0.3s;
+}
+}
+#banner {
+    background: url("./home.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+#title {
+    font-family: 'Kaushan Script', cursive;
+    font-size:180px;
+}
+#btnDiv:hover {
+    color:black;
+    background-color: white;
+    transition:0.5s;
+}
+#pic1 {
+    background: url("./pic2.jpeg");
+    width: 30rem;
+    border-radius:5px;
+    background-size:cover;
+    box-shadow: rgba(0, 0, 0, 0.264) 5px 5px 10px;
+}
+#feature{
+    font-family: "Nunito", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  padding-left:3rem;
+
 }

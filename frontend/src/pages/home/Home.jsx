@@ -2,6 +2,8 @@
 import React, { useState } from "react";
   import "tailwindcss/tailwind.css";
   import "./Home.css"
+import { Link } from "react-router-dom";
+
 
   const AgriApp = () => {
     // eslint-disable-next-line no-unused-vars
@@ -15,59 +17,36 @@ import React, { useState } from "react";
     return (
       <div className="font-sans">
         {/* Navbar */}
-        <nav className="bg-gray-800 text-white">
+        <nav className="bg-gray-800 text-white" >
           <div className="container mx-auto flex justify-between items-center py-4">
-            <a href="/" className="text-2xl font-bold font-kaushan">AgriGo</a>
-            <div className="hidden md:flex space-x-4">
-              <a href="/" className="hover:text-green-500">Home</a>
-              <div className="relative group">
-                <button className="hover:text-green-500">Services</button>
-                <div className="absolute left-0 hidden mt-2 w-48 bg-white text-gray-800 shadow-lg group-hover:block">
-                  <a
-                    href="/crop-disease"
-                    className="block px-4 py-2 hover:bg-gray-200"
-                  >
-                    Crop Diseases
-                  </a>
-                  <a
-                    href="/fertilizer-recommendation"
-                    className="block px-4 py-2 hover:bg-gray-200"
-                  >
-                    Fertilizer Recommendation
-                  </a>
-                  <a
-                    href="/crop-recommendation"
-                    className="block px-4 py-2 hover:bg-gray-200"
-                  >
-                    Crop Disease Prediction
-                  </a>
-                </div>
-              </div>
-            </div>
+            <a href="/" className="text-2xl font-bold font-kaushan"  style={{paddingLeft:"1rem"}}>Resilient Roots AI</a>
+         
           </div>
         </nav>
 
         {/* Banner */}
         <section
           id="banner"
-          className="sectionbg bg-cover bg-center h-screen flex items-center justify-center text-white text-center bg-[url('./HomeBG.jpg')]"
-  
+          className="sectionbg bg-cover bg-center h-screen flex items-center justify-center text-white text-center bg-[url('D:\program\React Js\learn React\Resellient Roots AI\leaf_disease_detection\frontend\src\pages\home\HomeBG1.jpeg')]"
+          
         >
-          <div>
-            <h1 className="text-6xl font-kaushan">AgriGo</h1>
-            <p className="text-lg italic">Leverage AI power to grow your field to the maximum</p>
+          <div >
+            <h1 className="text-6xl font-kaushan" id="title">Resilient Roots AI</h1>
+            <p className="text-lg italic">Empowering Farmers with Disease Recognition Technology</p>
             <div className="mt-8 space-x-4">
-              <a
-                href="#services"
+              <Link
+              id="btnDiv"
+              to="/detect"
                 className="bg-transparent border border-white px-4 py-2 hover:bg-white hover:text-black"
               >
-                Find Out
-              </a>
+                Predict the Disease
+              </Link>
               <a
+              id="btnDiv"
                 href="#feature"
                 className="bg-transparent border border-white px-4 py-2 hover:bg-white hover:text-black"
               >
-                Read More
+                 About us
               </a>
             </div>
           </div>
@@ -76,11 +55,11 @@ import React, { useState } from "react";
         {/* Features */}
         <section id="feature" className="py-20 bg-gray-100">
           <div className="text-center mb-12">
-            <p className="text-green-500 font-bold">FEATURES</p>
-            <h1 className="text-3xl font-bold">WHY CHOOSE US</h1>
+            <p className="text-green-500 font-bold" id="features">FEATURES</p>
+            <h1 className="text-3xl font-bold">WHY IS IT USEFULL</h1>
           </div>
           <div className="container mx-auto grid md:grid-cols-2 gap-8">
-            <div>
+            <div >
               <h2 className="text-xl font-bold text-green-500">Quick Diagnosis</h2>
               <p className="mt-2">
                 AI models make it possible to identify and treat crop diseases quickly and efficiently.
@@ -94,56 +73,60 @@ import React, { useState } from "react";
                 No need for agricultural experts or advanced crop management tools, reducing production costs.
               </p>
             </div>
-            <div>
-              <img
-                src=""
-                alt="Features"
-                
-                className=" rounded-lg shadow-lg mx-auto"
-              />
+            <div id="pic1">
+              
             </div>
           </div>
         </section>
 
         {/* Services */}
-        <section id="services" className="py-20">
+        <section id="homepg" className="py-20">
           <div className="text-center mb-12">
             <p className="text-green-500 font-bold">SERVICES</p>
             <h1 className="text-3xl font-bold">WE PROVIDE</h1>
           </div>
           <div className="container mx-auto grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 shadow-md rounded-lg">
-              <img
-                src="/images/service-1.jpg"
-                alt="Crop Recommendation"
-                className="rounded-md mb-4"
-              />
+            <div className="bg-white p-6 shadow-md rounded-lg" id="cards">
+            <div className="icondiv" style={{width:"100%",height:"50%",display:"flex",justifyContent:"center",alignItems:"center"}}>
+            <i className="fa-brands fa-pagelines"></i>
+            </div>
               <h2 className="text-xl font-bold text-center">Crop Disease prediction</h2>
               <p className="mt-2 text-center">
                 Analyzes soil and weather data to find the best-suited crop.
               </p>
+              <div className="icondiv" style={{width:"100%",height:"30%",display:"flex",justifyContent:"center",alignItems:"center"}}>
+            <Link to="/detect">
+              <button className="NavigateBtn" >Predict</button>
+            </Link>
             </div>
-            <div className="bg-white p-6 shadow-md rounded-lg">
-              <img
-                src="/images/service-3.jpg"
-                alt="Fertilizer Recommendation"
-                className="rounded-md mb-4"
-              />
+            </div>
+            <div className="bg-white p-6 shadow-md rounded-lg" id="cards">
+            <div className="icondiv" style={{width:"100%",height:"50%",display:"flex",justifyContent:"center",alignItems:"center"}}>
+            <i className="fa-solid fa-suitcase-rolling"></i>
+            </div>
               <h2 className="text-xl font-bold text-center">Fertilizer Recommendation</h2>
               <p className="mt-2 text-center">
-                Analyzes soil and crop type to find the best fertilizer for your crop.
+                Analyzes soil and weather data to find the best-suited crop.
               </p>
+              <div className="icondiv" style={{width:"100%",height:"30%",display:"flex",justifyContent:"center",alignItems:"center"}}>
+              <Link to="/fertilizer">
+              <button className="NavigateBtn">Recommend   </button>
+              </Link>
             </div>
-            <div className="bg-white p-6 shadow-md rounded-lg">
-              <img
-                src="/images/service-2.jpg"
-                alt="Crop Disease Prediction"
-                className="rounded-md mb-4"
-              />
+            </div>
+            <div className="bg-white p-6 shadow-md rounded-lg" id="cards">
+            <div className="icondiv" style={{width:"100%",height:"50%",display:"flex",justifyContent:"center",alignItems:"center"}}>
+            <i className="fa-solid fa-cloud"></i>   
+            </div>
               <h2 className="text-xl font-bold text-center">Weather prediction</h2>
               <p className="mt-2 text-center">
-                From the images of your crops, our models can check their health.
+                Analyzes soil and weather data to find the best-suited crop.
               </p>
+              <div className="icondiv" style={{width:"100%",height:"30%",display:"flex",justifyContent:"center",alignItems:"center"}}>
+              <Link to="/weather">
+              <button className="NavigateBtn">Predict</button>
+              </Link>
+            </div>
             </div>
           </div>
         </section>
@@ -151,14 +134,17 @@ import React, { useState } from "react";
         {/* Footer */}
         <footer className="bg-gray-800 text-white py-12">
           <div className="container mx-auto grid md:grid-cols-2">
-            <div>
-              <h1 className="text-2xl font-kaushan">AgriGo</h1>
-              <p>Email: AymenMir1001@gmail.com</p>
+            <div style={{marginLeft:"1rem"}}>
+              <h1 className="text-2xl font-kaushan" style={{marginBottom:"1rem"}}>Resilient Roots AI</h1>
+              <p>preethammr.is23@rvce.edu.in</p>
+              <p>roharngowda.is23@rvce.edu.in</p>
+              <p>amoghm.ai23@rvce.edu.in</p>
+              <p>navyahebbar.is24@rvce.edu.in</p>
             </div>
             <div className="text-right">
-              <h1 className="text-2xl font-kaushan">AgriGo</h1>
+              <h1 className="text-2xl font-kaushan">Contact Us</h1>
               <p>
-                Github: <a href="https://github.com/Aymen1001" className="text-green-500">Aymen1001</a>
+                Github: <a href="https://github.com/shripad-gm/leaf_disease_detection/" className="text-green-500">Access Our GitHub</a>
               </p>
             </div>
           </div>
