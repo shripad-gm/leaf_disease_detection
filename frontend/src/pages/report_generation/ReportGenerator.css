@@ -2,7 +2,7 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  background-image: url('/bg2.jpg'); /* Add your image path */
+  background-image: url('../home/home.jpg'); /* Add your image path */
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;

@@ -2,7 +2,7 @@
 import React from 'react'
 import Navbar from './Navbar'
 import './About.css'
-import profile from "C:\\Users\\shrip\\Desktop\\Coding\\el-sem3\\frontend\\src\\assets\\profile-icon.png.png"
+
 function About() {
   return (
     <div>
@@ -18,7 +18,7 @@ function About() {
             <div className="team-member">
             <div className="profile-pic-cover">
               <div className="profile-pic">
-                <img src={profile} alt="Team Icon" />
+                <img src={""} alt="Team Icon" />
               </div>
                 </div>
               <p className="member-name">SHRIPAD MARADI</p>
@@ -27,7 +27,7 @@ function About() {
             <div className="team-member">
                 <div className="profile-pic-cover">
               <div className="profile-pic">
-                <img src={profile} alt="Team Icon" />
+                <img src={""} alt="Team Icon" />
               </div>
                 </div>
               <p className="member-name">AMOGH A P</p>
@@ -36,7 +36,7 @@ function About() {
             <div className="team-member">
             <div className="profile-pic-cover">
               <div className="profile-pic">
-                <img src={profile} alt="Team Icon" />
+                <img src={""} alt="Team Icon" />
               </div>
                 </div>
               <p className="member-name">PREETHAM M R</p>
@@ -45,7 +45,7 @@ function About() {
             <div className="team-member">
             <div className="profile-pic-cover">
               <div className="profile-pic">
-                <img src={profile} alt="Team Icon" />
+                <img src={""} alt="Team Icon" />
               </div>
                 </div>
               <p className="member-name">ROHAN GOWDA</p>
@@ -54,7 +54,7 @@ function About() {
             <div className="team-member">
             <div className="profile-pic-cover">
               <div className="profile-pic">
-                <img src={profile} alt="Team Icon" />
+                <img src={""} alt="Team Icon" />
               </div>
                 </div>
               <p className="member-name">NAVYA HEBBAR</p>
