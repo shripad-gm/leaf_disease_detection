@@ -8,6 +8,7 @@ import { useAuthContext } from './context/AuthContext'
 import Report from "./pages/report_generation/Report"
 import About from './pages/components/About'
 import DiseaseRecognition from './pages/detect/DiseaseRecognition'
+import Test from './pages/Components/test'
 function App() {
   const {authUser}=useAuthContext();
   return (
@@ -28,6 +29,7 @@ function App() {
   <Route path="/report" element= {authUser?<Report/>:<Navigate to="/login"/>}/>
   <Route path='/about' element={authUser?<About/>:<Navigate to="/login"/>} />
   <Route path='/detect' element={authUser?<DiseaseRecognition/>:<Navigate to="/login"/>} />
+  <Route path='/test' element={<Test/>} />
    
   </Routes> 
   <Toaster/>

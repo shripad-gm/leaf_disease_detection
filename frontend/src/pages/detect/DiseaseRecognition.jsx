@@ -1,11 +1,14 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const DiseaseRecognition = () => {
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);  // Store the actual file for prediction
   const [prediction, setPrediction] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   // Function to handle image upload
   const handleImageUpload = (e) => {
@@ -16,13 +19,23 @@ const DiseaseRecognition = () => {
     }
   };
 
+  const handleGenerateReport = () => {
+    if (!prediction) {
+      alert("No prediction available. Please predict first.");
+      return;
+    }
+
+    // Navigate to the report page and pass the prediction as state
+    navigate("/report", { state: { diseaseName: prediction } });
+  };
+
   const handlePredict = async () => {
-    if (imageFile) { // Ensure that an image file is uploaded
-      console.log("Uploading file:", imageFile);  // Debugging: Check the file object
+    if (imageFile) { 
+      console.log("Uploading file:", imageFile);  
       setIsLoading(true);
   
       const formData = new FormData();
-      formData.append("file", imageFile);  // Send the actual file object
+      formData.append("file", imageFile);  
   
       try {
         const response = await fetch("http://127.0.0.1:5000/detect", {
@@ -72,6 +85,10 @@ const DiseaseRecognition = () => {
       ) : (
         prediction && <p>{prediction}</p>
       )}
+
+      <button onClick={handleGenerateReport} style={{ marginTop: '20px' }}>
+        generate report
+      </button>
     </div>
   );
 };

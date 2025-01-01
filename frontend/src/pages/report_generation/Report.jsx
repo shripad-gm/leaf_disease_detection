@@ -2,22 +2,18 @@
 import React, { useState, useEffect } from "react";
 import useReport from "../../Hooks/useReport";
 import { jsPDF } from "jspdf";
-import useSpeechRecognition from "../../Hooks/useSpeechRecognition"; // Import the speech recognition hook
+
 import "./ReportGenerator.css";
+import { useLocation } from "react-router-dom";
 
 const ReportGenerator = () => {
-  const [diseaseName, setDiseaseName] = useState("");
-  const [severity, setSeverity] = useState("mild");
+  const location = useLocation();
+  const [diseaseName] = useState(location.state?.diseaseName || ""); // Get disease name from navigation state
+  
+  const [severity] = useState("mild");
   const [report, setReport] = useState("");
   const { loading, generateReport } = useReport();
-  const { transcript, isListening, startRecognition, stopRecognition } = useSpeechRecognition();
 
-  // Update disease name when transcript changes
-  useEffect(() => {
-    if (transcript) {
-      setDiseaseName(transcript); // Set the speech-to-text result to diseaseName
-    }
-  }, [transcript]);
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -67,34 +63,7 @@ const ReportGenerator = () => {
   return (
     <div className="report-container">
       <h1 className="title">🌾 Crop Disease Report Generator</h1>
-      <div className="input-group">
-        <div className="input-with-mic">
-          <input
-            type="text"
-            placeholder="Enter Disease Name"
-            value={diseaseName}
-            onChange={(e) => setDiseaseName(e.target.value)}
-            className="input-field"
-          />
-          <button
-            className="microphone-button"
-            onClick={isListening ? stopRecognition : startRecognition}
-            aria-label={isListening ? "Stop listening" : "Start listening"}
-            disabled={loading}
-          >
-            🎤
-          </button>
-        </div>
-        <select
-          value={severity}
-          onChange={(e) => setSeverity(e.target.value)}
-          className="dropdown"
-        >
-          <option value="mild">Mild</option>
-          <option value="moderate">Moderate</option>
-          <option value="severe">Severe</option>
-        </select>
-      </div>
+ 
       <div className="button-container">
         <button
           onClick={handleClick}
@@ -117,7 +86,7 @@ const ReportGenerator = () => {
           <textarea
             value={report}
             readOnly
-            rows="10"
+            rows="30"
             className="report-textarea"
           />
           <div className="download-button-container">
@@ -132,3 +101,5 @@ const ReportGenerator = () => {
 };
 
 export default ReportGenerator;
+
+
