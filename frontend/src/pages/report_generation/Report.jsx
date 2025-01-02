@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import useReport from "../../Hooks/useReport";
 import { jsPDF } from "jspdf";
+import Navbar from "../detect/components/Navbar";
 
 import "./ReportGenerator.css";
 import { useLocation } from "react-router-dom";
@@ -62,6 +63,7 @@ const ReportGenerator = () => {
 
   return (
     <div className="bodydiv">
+      <Navbar/>
     <div className="report-container">
       <h1 className="title">🌾 Crop Disease Report Generator</h1>
  

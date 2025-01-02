@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
 import "./HeroSection.css";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
@@ -9,9 +10,9 @@ const HeroSection = () => {
         <h1>Resilient Roots AI</h1>
         <p>Empowering Farmers with Disease Recognition Technology</p>
         <div className="hero-btns">
-          <a href="#result" className="btn">Get Started</a>
-          <a href="#about" className="btn">Learn More</a>
-        </div>
+         <Link to='/'><a className="btn">Home</a></Link>
+         {/* <Link to='/login'><a className="btn">Login</a></Link>        */}
+          </div>
       </div>
     </section>
   );
