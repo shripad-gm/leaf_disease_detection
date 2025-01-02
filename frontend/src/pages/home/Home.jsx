@@ -137,9 +137,10 @@ import { Link } from "react-router-dom";
             <div style={{marginLeft:"1rem"}}>
               <h1 className="text-2xl font-kaushan" style={{marginBottom:"1rem"}}>Resilient Roots AI</h1>
               <p>preethammr.is23@rvce.edu.in</p>
-              <p>roharngowda.is23@rvce.edu.in</p>
-              <p>amoghm.ai23@rvce.edu.in</p>
-              <p>navyahebbar.is24@rvce.edu.in</p>
+              <p>shripadgmaradi.cd23@rvce.edu.in</p>
+              <p>rohanrgowda.is23@rvce.edu.in</p>
+              <p>amoghap.ai23@rvce.edu.in</p>
+              <p>navyaghebbar.cd24@rvce.edu.in</p>
             </div>
             <div className="text-right">
               <h1 className="text-2xl font-kaushan">Contact Us</h1>
