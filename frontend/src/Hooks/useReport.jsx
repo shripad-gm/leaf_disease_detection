@@ -16,7 +16,8 @@ const useReport = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`Server error: ${response.statusText}`);
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Server error: ${response.statusText}`);
       }
 
       const data = await response.json();
@@ -24,7 +25,7 @@ const useReport = () => {
         throw new Error(data.error);
       }
 
-      setAuthUser(data); // Update AuthContext with response data
+      // setAuthUser(data); // Removed bug: This was incorrectly overwriting user auth state with report data
       setReport(data.report); // Set the report content in state
     } catch (error) {
       console.error("Error generating report:", error);

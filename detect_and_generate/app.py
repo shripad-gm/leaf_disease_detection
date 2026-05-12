@@ -6,7 +6,11 @@ from chain import ReportGenerator  # Import your ReportGenerator class
 from dlmodel import predict_name
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:3000"])  # Allow only your React app's origin
+CORS(app) # Fix: Allow all origins to prevent CORS errors
+
+# Fix: Create uploads directory automatically
+if not os.path.exists('uploads'):
+    os.makedirs('uploads')
 
 report_generator = ReportGenerator()
 
