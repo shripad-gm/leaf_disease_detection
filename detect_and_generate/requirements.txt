@@ -1,10 +1,10 @@
 # Backend dependencies for Resilient Roots AI
 
 flask==3.0.3
-flask‑cors==4.0.0
-tensorflow==2.13.0            # works with NumPy < 2 (see note below)
+flask-cors==4.0.0
+tensorflow>=2.13.0            # flexible version for better compatibility
 numpy==1.26.4                # compatible with TensorFlow 2.13
 pillow==10.3.0               # image loading used in dlmodel.py
-langchain‑groq==0.2.2
-langchain‑core==0.2.11
-# Werkzeug is bundled with Flask, no separate entry needed
+langchain-groq
+langchain-core
+python-dotenv==1.0.1
