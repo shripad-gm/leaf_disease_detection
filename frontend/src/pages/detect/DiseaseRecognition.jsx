@@ -149,8 +149,8 @@ const DiseaseRecognition = () => {
                 <div className="space-y-10 reveal active">
                   <div className="text-center">
                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-4">Diagnostic Output</p>
-                    <div className="text-4xl font-black text-white tracking-tighter uppercase leading-tight p-8 rounded-3xl bg-emerald-500/10 border border-emerald-500/20">
-                      {prediction}
+                    <div className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase leading-tight p-8 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 break-words">
+                      {prediction.replace(/_/g, ' ')}
                     </div>
                   </div>
 
