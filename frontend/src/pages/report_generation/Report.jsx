@@ -1,109 +1,359 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from "react";
-import useReport from "../../Hooks/useReport";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { jsPDF } from "jspdf";
-import Navbar from "../detect/components/Navbar";
-
-import "./ReportGenerator.css";
-import { useLocation } from "react-router-dom";
+import { FaFileAlt, FaArrowLeft, FaFileDownload, FaMagic, FaShieldAlt } from "react-icons/fa";
+import useReport from "../../Hooks/useReport";
 
 const ReportGenerator = () => {
   const location = useLocation();
-  const [diseaseName] = useState(location.state?.diseaseName || ""); // Get disease name from navigation state
-  
+  const [diseaseName] = useState(location.state?.diseaseName || "");
   const [severity] = useState("mild");
   const [report, setReport] = useState("");
   const { loading, generateReport } = useReport();
 
-
   const handleClick = async (e) => {
     e.preventDefault();
     if (!diseaseName.trim()) {
-      alert("Please enter a disease name.");
+      alert("No disease data detected. Please perform analysis first.");
       return;
     }
     await generateReport(severity, diseaseName, setReport);
   };
 
-  // Function to generate the PDF
+  // Enhanced formatter to handle tables and multi-page logic
+  const formatReport = (text) => {
+    if (!text) return "";
+    let lines = text.split('\n');
+    let html = [];
+    let inTable = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i].trim();
+      
+      // Handle Markdown Tables
+      if (line.startsWith('|')) {
+        if (!inTable) {
+          html.push('<div class="overflow-x-auto my-6"><table class="w-full border-collapse border border-emerald-500/30 bg-emerald-500/5 text-xs">');
+          inTable = true;
+        }
+        let cells = line.split('|').filter(c => c.trim() !== '' || line.indexOf('|'+c+'|') !== -1);
+        // Skip separator lines like |---|---|
+        if (line.includes('---')) continue;
+
+        html.push('<tr class="border-b border-emerald-500/20">');
+        cells.forEach(cell => {
+          let cellContent = cell.trim()
+            .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+            .replace(/\*(.*?)\*/g, '<b>$1</b>');
+          html.push(`<td class="p-3 border-r border-emerald-500/10 text-slate-200">${cellContent}</td>`);
+        });
+        html.push('</tr>');
+        continue;
+      } else if (inTable) {
+        html.push('</table></div>');
+        inTable = false;
+      }
+
+      // Handle normal lines with support for ** and *
+      let formattedLine = line
+        .replace(/\*\*(.*?)\*\*/g, '<strong class="text-emerald-400 font-bold">$1</strong>')
+        .replace(/\*(.*?)\*/g, '<strong class="text-emerald-400 font-bold">$1</strong>');
+      
+      if (line.startsWith('-')) {
+        html.push(`<li class="ml-6 mb-2 list-disc text-slate-300 font-light">${formattedLine.substring(1)}</li>`);
+      } else if (line.length > 0) {
+        html.push(`<p class="mb-4 text-slate-300 leading-relaxed font-light">${formattedLine}</p>`);
+      }
+    }
+    return html.join('');
+  };
+
   const downloadReport = () => {
     const doc = new jsPDF();
-    doc.setFont("helvetica", "normal");
+    const pageHeight = doc.internal.pageSize.height;
+    let y = 50;
+
+    const drawHeader = (pageNum) => {
+      // Header Bar
+      doc.setFillColor(0, 30, 20);
+      doc.rect(0, 0, 210, 40, 'F');
+      
+      // Page Border
+      doc.setDrawColor(16, 185, 129);
+      doc.setLineWidth(0.8);
+      doc.rect(5, 5, 200, 287, 'D');
+
+      // Title & Branding
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(24);
+      doc.setTextColor(52, 211, 153);
+      doc.text("RESILIENT ROOTS AI", 20, 20);
+      
+      doc.setFontSize(8);
+      doc.setTextColor(255, 255, 255);
+      doc.text("GLOBAL PRECISION AGRICULTURE DIAGNOSTIC SERVICE", 20, 28);
+      doc.text(`REPORT ID: RR-${Math.random().toString(36).substr(2, 9).toUpperCase()} • PAGE ${pageNum}`, 20, 34);
+
+      // Diagnostic Seal
+      doc.setDrawColor(52, 211, 153);
+      doc.setFillColor(0, 50, 40);
+      doc.circle(180, 20, 12, 'FD');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(6);
+      doc.text("AI CERTIFIED", 180, 18, { align: "center" });
+      doc.setFontSize(10);
+      doc.text("VERIFIED", 180, 24, { align: "center" });
+    };
+
+    drawHeader(1);
+
+    // 1. Diagnosis Header Block
+    doc.setFillColor(248, 252, 250);
+    doc.rect(15, 45, 180, 25, 'F');
+    doc.setDrawColor(16, 185, 129);
+    doc.setLineWidth(0.4);
+    doc.rect(15, 45, 180, 25, 'D');
 
     doc.setFont("helvetica", "bold");
+    doc.setFontSize(8);
+    doc.setTextColor(120, 120, 120);
+    doc.text("PRIMARY IDENTIFICATION:", 20, 52);
     doc.setFontSize(16);
-    doc.setTextColor(255, 0, 0); // Red color for the title
-    doc.text("CROP DISEASE REPORT", 105, 20, { align: "center" });
+    doc.setTextColor(0, 80, 60);
+    doc.text(diseaseName.toUpperCase(), 20, 63);
 
-    doc.setTextColor(0, 0, 0); // Black color for text
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(12);
-    doc.text(`Disease Name: ${diseaseName}`, 20, 40);
-    doc.setFontSize(12);
-    doc.text(`Severity: ${severity}`, 20, 50);
-    doc.setFontSize(12);
-    doc.text("Generated Report:", 20, 60);
+    doc.setFontSize(8);
+    doc.text("ANALYSIS SEVERITY:", 145, 52);
+    doc.setTextColor(severity.toLowerCase() === 'mild' ? 50 : 200, 50, 50);
+    doc.setFontSize(14);
+    doc.text(severity.toUpperCase(), 145, 63);
 
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(10);
-    const reportLines = doc.splitTextToSize(report, 180);
-    let y = 70;
+    y = 82;
 
-    reportLines.forEach((line) => {
-      doc.text(line, 20, y);
-      y += 8;
-      if (y > doc.internal.pageSize.height - 20) {
+    const rawLines = report.split('\n');
+    doc.setLineHeightFactor(1.5);
+
+    rawLines.forEach((line) => {
+      line = line.trim();
+      if (!line) { y += 4; return; }
+
+      if (y > pageHeight - 35) {
         doc.addPage();
-        y = 20;
+        drawHeader(doc.internal.getNumberOfPages());
+        y = 50;
+      }
+
+      // --- SECTION HEADINGS ---
+      if (/^\d+\./.test(line) || line.startsWith('#') || line.toLowerCase().includes('summary')) {
+        y += 6;
+        doc.setFillColor(245, 252, 250);
+        doc.setDrawColor(16, 185, 129);
+        doc.rect(15, y - 5, 180, 10, 'FD');
+        
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(11);
+        doc.setTextColor(10, 80, 60);
+        doc.text(line.replace(/[#*]/g, '').toUpperCase(), 22, y + 2);
+        y += 14;
+      } 
+      // --- TABLES ---
+      else if (line.startsWith('|')) {
+        if (line.includes('---')) return;
+        const cells = line.split('|').filter(c => c.trim().length > 0 || line.indexOf('|'+c+'|') !== -1);
+        if (cells.length === 0) return;
+
+        const colWidth = 180 / cells.length;
+        doc.setFontSize(8);
+        
+        let maxLines = 1;
+        const cellData = cells.map(c => {
+          const wrapped = doc.splitTextToSize(c.trim().replace(/\*\*/g, ''), colWidth - 4);
+          if (wrapped.length > maxLines) maxLines = wrapped.length;
+          return wrapped;
+        });
+
+        const rowHeight = (maxLines * 4) + 4;
+        if (y + rowHeight > pageHeight - 20) { doc.addPage(); drawHeader(doc.internal.getNumberOfPages()); y = 50; }
+
+        let x = 15;
+        const isHeader = line.toLowerCase().includes('type') || line.toLowerCase().includes('product');
+        
+        cellData.forEach((wrappedText) => {
+          const originalText = wrappedText.join(' ');
+          const hasBold = originalText.includes('*'); // Detects * or **
+          const cleanText = wrappedText.map(t => t.replace(/\*/g, ''));
+          
+          if (isHeader) {
+            doc.setFillColor(16, 185, 129);
+            doc.setTextColor(255, 255, 255);
+            doc.setFont("helvetica", "bold");
+          } else {
+            doc.setFillColor(255, 255, 255);
+            doc.setTextColor(hasBold ? 10 : 60, hasBold ? 80 : 60, hasBold ? 60 : 60);
+            doc.setFont("helvetica", hasBold ? "bold" : "normal");
+          }
+          
+          doc.setDrawColor(200, 210, 205);
+          doc.rect(x, y - 4, colWidth, rowHeight, 'FD');
+          doc.text(cleanText, x + 2, y);
+          x += colWidth;
+        });
+        y += rowHeight;
+      } 
+      // --- BULLETS & TEXT ---
+      else {
+        doc.setFontSize(9.5);
+        let xOffset = 15;
+        const hasBold = line.includes('*');
+        const cleanContent = line.replace(/\*/g, '');
+
+        if (line.startsWith('-')) {
+          doc.setTextColor(16, 185, 129);
+          doc.setFont("helvetica", "bold");
+          doc.text("•", 15, y);
+          xOffset = 20;
+          
+          doc.setTextColor(hasBold ? 10 : 60, hasBold ? 80 : 60, hasBold ? 60 : 60);
+          doc.setFont("helvetica", hasBold ? "bold" : "normal");
+          const wrapped = doc.splitTextToSize(cleanContent.substring(1).trim(), 175);
+          doc.text(wrapped, xOffset, y);
+          y += (wrapped.length * 5) + 1;
+        } else {
+          doc.setTextColor(hasBold ? 10 : 60, hasBold ? 80 : 60, hasBold ? 60 : 60);
+          doc.setFont("helvetica", hasBold ? "bold" : "normal");
+          const wrapped = doc.splitTextToSize(cleanContent, 180);
+          doc.text(wrapped, xOffset, y);
+          y += (wrapped.length * 5) + 1;
+        }
       }
     });
 
-    doc.save("crop_disease_report.pdf");
+    // Final Disclaimer
+    doc.setFontSize(6);
+    doc.setTextColor(180, 180, 180);
+    doc.text("DISCLAIMER: THIS AI-GENERATED REPORT IS FOR INFORMATIONAL PURPOSES ONLY. CONSULT LOCAL AGRICULTURAL AUTHORITIES BEFORE APPLYING CHEMICAL TREATMENTS.", 105, 288, { align: "center" });
+
+    doc.save(`ResilientRoots_Certified_Report_${diseaseName.replace(/\s+/g, '_')}.pdf`);
   };
 
   return (
-    <div className="bodydiv">
-      <Navbar/>
-    <div className="report-container">
-      <h1 className="title">🌾 Crop Disease Report Generator</h1>
- 
-      <div className="button-container">
-        <button
-          onClick={handleClick}
-          className={`generate-button ${loading ? "disabled" : ""}`}
-          disabled={loading}
-        >
-          {loading ? (
-            <div className="loading-container">
-              <div className="loading-spinner"></div>
-              <span className="loading-text">Loading...</span>
-            </div>
-          ) : (
-            "✨ Generate Report ✨"
-          )}
-        </button>
+    <div className="min-h-screen bg-slate-950 text-slate-100 overflow-x-hidden selection:bg-emerald-500/30 font-sans">
+      
+      {/* Dynamic Background */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-emerald-500/10 rounded-full blur-[150px] animate-pulse"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-emerald-600/10 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
-      {report && (
-        <div className="report-box">
-          <h2>🌟 Generated Report 🌟</h2>
-          <textarea
-            value={report}
-            readOnly
-            rows="30"
-            className="report-textarea"
-          />
-          <div className="download-button-container">
-            <button onClick={downloadReport} className="download-button">
-              📥 Download PDF
-            </button>
+
+      {/* Navigation */}
+      <nav className="relative z-50 px-10 py-8 flex justify-between items-center border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
+        <Link to="/" className="flex items-center gap-4 group">
+          <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-emerald-400 group-hover:bg-emerald-400 group-hover:text-black transition-all shadow-[0_0_20px_rgba(52,211,153,0.2)]">
+            <FaArrowLeft />
+          </div>
+          <span className="uppercase tracking-[0.4em] text-[10px] font-black text-slate-400 group-hover:text-white transition-colors">Archive Access</span>
+        </Link>
+        <div className="flex items-center gap-4">
+          <div className="px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></div>
+            <span className="uppercase tracking-[0.2em] text-[9px] font-black text-emerald-400">Live Engine</span>
           </div>
         </div>
-      )}
-    </div>
+      </nav>
+
+      <main className="relative z-10 max-w-5xl mx-auto px-6 py-16">
+        
+        {/* Header */}
+        <div className="text-center mb-20 space-y-6">
+           <p className="text-emerald-400 font-black tracking-[0.6em] text-[11px] uppercase italic">Precision Intelligence</p>
+           <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-none drop-shadow-2xl">
+             Remediation <br /> <span className="gradient-text italic">Protocol.</span>
+           </h1>
+        </div>
+
+        <div className="grid gap-12">
+          
+          {/* Controls Card */}
+          {!report && (
+            <div className="glass-card !rounded-[3rem] !p-16 border-white/10 text-center space-y-12 shadow-2xl relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="w-24 h-24 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-5xl text-emerald-400 mx-auto shadow-[0_0_40px_rgba(52,211,153,0.1)]">
+                <FaMagic className="animate-pulse" />
+              </div>
+              
+              <div className="space-y-6 relative z-10">
+                <h3 className="text-3xl font-black tracking-tighter uppercase">Generate Action Plan</h3>
+                <p className="text-slate-400 text-xs font-bold uppercase tracking-[0.4em] max-w-md mx-auto leading-loose">
+                  Synthesizing medical-grade remediation <br />
+                  <span className="text-emerald-400 text-sm">{diseaseName || "System Idle"}</span>
+                </p>
+              </div>
+
+              <button
+                onClick={handleClick}
+                disabled={loading || !diseaseName}
+                className={`group relative px-12 py-6 bg-emerald-500 text-black font-black uppercase tracking-widest rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(52,211,153,0.3)] ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                <span className="flex items-center gap-3">
+                  {loading ? 'Processing Data...' : 'Initialize Generation'}
+                  {!loading && <FaMagic className="text-sm group-hover:rotate-12 transition-transform" />}
+                </span>
+              </button>
+            </div>
+          )}
+
+          {/* Enhanced Results Box */}
+          {report && (
+            <div className="glass-card !rounded-[3rem] !p-12 border-emerald-500/20 shadow-[0_0_100px_rgba(16,185,129,0.1)] reveal active">
+               <div className="flex justify-between items-center mb-12 pb-8 border-b border-white/10">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                       <FaShieldAlt className="text-emerald-400" />
+                    </div>
+                    <div>
+                      <span className="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-400 block">Verified Protocol</span>
+                      <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500 italic">Secure Output 882-X</span>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={downloadReport} 
+                    className="group px-6 py-3 bg-white/5 hover:bg-emerald-500 hover:text-black border border-white/10 hover:border-emerald-500 rounded-xl transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em]"
+                  >
+                    Download PDF <FaFileDownload className="group-hover:translate-y-0.5 transition-transform" />
+                  </button>
+               </div>
+
+               {/* Rich Text Area */}
+               <div className="relative group">
+                 <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                 <div className="relative bg-slate-900/40 border border-white/5 rounded-[2rem] p-12 max-h-[600px] overflow-y-auto custom-scrollbar shadow-inner">
+                    <div 
+                      className="prose prose-invert max-w-none"
+                      dangerouslySetInnerHTML={{ __html: formatReport(report) }}
+                    />
+                 </div>
+               </div>
+
+               <div className="mt-12 flex flex-col md:flex-row gap-6 justify-center">
+                  <button onClick={downloadReport} className="group px-10 py-5 bg-emerald-500 text-black font-black uppercase tracking-widest rounded-2xl transition-all hover:shadow-[0_15px_30px_rgba(52,211,153,0.3)] flex items-center gap-3">
+                    Export Official PDF <FaFileDownload />
+                  </button>
+                  <button onClick={() => window.location.reload()} className="px-10 py-5 bg-white/5 hover:bg-white/10 text-white font-black uppercase tracking-widest rounded-2xl border border-white/10 transition-all">
+                    Reset Analysis
+                  </button>
+               </div>
+            </div>
+          )}
+
+        </div>
+      </main>
+
+      <footer className="py-24 text-center border-t border-white/5">
+        <p className="text-[10px] font-black uppercase tracking-[1.5em] text-slate-700">Resilient Roots AI • Global Registry</p>
+      </footer>
     </div>
   );
 };
 
 export default ReportGenerator;
-
-

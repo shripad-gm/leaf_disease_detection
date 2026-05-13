@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import blurredImage from '../../assets/blurred.avif'; // Import the background image
-import Navbar from '../detect/components/Navbar';
+import { Link } from 'react-router-dom';
+import { FaLeaf, FaArrowLeft, FaFlask, FaVial, FaWater, FaThermometerHalf, FaSun, FaArrowRight } from 'react-icons/fa';
 
 const FertilizationForm = () => {
   const [soilTemp, setSoilTemp] = useState('');
@@ -15,199 +15,161 @@ const FertilizationForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    let recommendationMessage = '';
     if (soilTemp && soilHumidity && soilMoisture && azote && phosphorous && potassium && soilType && cropType) {
-      recommendationMessage = `Based on your inputs, we recommend the following for ${cropType} on ${soilType} soil: 
-      - Azote: ${azote}g
-      - Phosphorous: ${phosphorous}g
-      - Potassium: ${potassium}g
-      - Soil Temperature: ${soilTemp}°C
-      - Soil Humidity: ${soilHumidity}%
-      - Soil Moisture: ${soilMoisture}%`;
+      setRecommendation(`Protocol Established: For ${cropType} in ${soilType} soil, maintain Azote at ${azote}g, Phosphorous at ${phosphorous}g, and Potassium at ${potassium}g. Monitor temperature at ${soilTemp}°C and humidity at ${soilHumidity}% for optimal yield.`);
     } else {
-      recommendationMessage = 'Please fill out all the fields.';
+      setRecommendation('Error: Incomplete data profile. All parameters are required for precision calculation.');
     }
-
-    setRecommendation(recommendationMessage);
-  };
-
-  const inputStyle = {
-    backgroundColor: 'white',
-    border: '1px solid #d1d5db',
-    borderRadius: '8px',
-    padding: '10px',
-    fontSize: '1rem',
-    outline: 'none',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-    transition: 'all 0.3s ease',
-  };
-
-  const inputFocusStyle = {
-    borderColor: '#3b82f6',
-    boxShadow: '0 4px 8px rgba(59, 130, 246, 0.2)',
-  };
-
-  const buttonStyle = {
-    backgroundColor: '#3b82f6',
-    color: 'white',
-    padding: '10px 20px',
-    border: 'none',
-    borderRadius: '8px',
-    fontSize: '1rem',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-  };
-
-  const buttonHoverStyle = {
-    backgroundColor: '#2563eb',
-  };
-
-  const paragraphStyle = {
-    marginTop: '20px',
-    fontSize: '1rem',
-    color: '#374151',
   };
 
   return (
-    <div className="disease-container">
-      <Navbar />
-      <div className="disease-file-input-container">
-        <div className="max-w-2xl mx-auto p-6 bg-white shadow-xl rounded-xl border border-gray-200 overflow-hidden relative z-10">
-          <h2 className="disease-heading">Fertilization Recommendation</h2>
+    <div className="min-h-screen bg-slate-950 text-slate-100 overflow-x-hidden selection:bg-emerald-500/30 font-sans">
+      
+      {/* Home Theme Background */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-blue-600/10 rounded-full blur-[150px] animate-pulse"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-emerald-600/10 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+      </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Soil Temperature */}
-            <div className="flex flex-col">
-              <label className="text-md font-medium text-gray-700">Soil Temperature (°C)</label>
+      {/* Navigation */}
+      <nav className="relative z-50 px-10 py-8 flex justify-between items-center">
+        <Link to="/" className="flex items-center gap-4 group">
+          <div className="w-10 h-10 rounded-xl glass flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-black transition-all">
+            <FaArrowLeft />
+          </div>
+          <span className="uppercase tracking-[0.4em] text-[9px] font-black">Return Home</span>
+        </Link>
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-black">
+            <FaFlask />
+          </div>
+          <span className="uppercase tracking-[0.3em] text-[10px] font-black">Nutrient Lab</span>
+        </div>
+      </nav>
+
+      <main className="relative z-10 max-w-4xl mx-auto px-6 py-10">
+        <div className="text-center mb-16 space-y-4">
+          <p className="text-emerald-500 font-black tracking-[0.5em] text-[10px] uppercase">Soil Synthesis</p>
+          <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">Fertilizer <br /> <span className="gradient-text italic">Recommendation.</span></h1>
+        </div>
+
+        <div className="glass-card !rounded-[2.5rem] !p-12 border-white/5 shadow-2xl">
+          <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-4xl text-emerald-500 mx-auto mb-12">
+            <FaFlask />
+          </div>
+
+          <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-8">
+            {/* Input fields aligned to home theme */}
+            <div className="space-y-3">
+              <label className="text-[9px] font-black uppercase tracking-widest text-slate-500 flex items-center gap-2">
+                <FaThermometerHalf className="text-emerald-500" /> Soil Temp (°C)
+              </label>
               <input
                 type="number"
                 value={soilTemp}
                 onChange={(e) => setSoilTemp(e.target.value)}
-                style={inputStyle}
-                onFocus={(e) => Object.assign(e.target.style, inputFocusStyle)}
-                onBlur={(e) => Object.assign(e.target.style, inputStyle)}
-                placeholder="Enter soil temperature"
+                className="w-full bg-white/[0.03] border border-white/10 rounded-2xl p-4 outline-none focus:border-emerald-500/50 transition-colors text-white text-sm"
+                placeholder="0.0"
               />
             </div>
 
-            {/* Soil Humidity */}
-            <div className="flex flex-col">
-              <label className="text-md font-medium text-gray-700">Soil Humidity (%)</label>
+            <div className="space-y-3">
+              <label className="text-[9px] font-black uppercase tracking-widest text-slate-500 flex items-center gap-2">
+                <FaSun className="text-emerald-500" /> Soil Humidity (%)
+              </label>
               <input
                 type="number"
                 value={soilHumidity}
                 onChange={(e) => setSoilHumidity(e.target.value)}
-                style={inputStyle}
-                onFocus={(e) => Object.assign(e.target.style, inputFocusStyle)}
-                onBlur={(e) => Object.assign(e.target.style, inputStyle)}
-                placeholder="Enter soil humidity"
+                className="w-full bg-white/[0.03] border border-white/10 rounded-2xl p-4 outline-none focus:border-emerald-500/50 transition-colors text-white text-sm"
+                placeholder="0"
               />
             </div>
 
-            {/* Soil Moisture */}
-            <div className="flex flex-col">
-              <label className="text-md font-medium text-gray-700">Soil Moisture (%)</label>
+            <div className="space-y-3">
+              <label className="text-[9px] font-black uppercase tracking-widest text-slate-500 flex items-center gap-2">
+                <FaWater className="text-emerald-500" /> Soil Moisture (%)
+              </label>
               <input
                 type="number"
                 value={soilMoisture}
                 onChange={(e) => setSoilMoisture(e.target.value)}
-                style={inputStyle}
-                onFocus={(e) => Object.assign(e.target.style, inputFocusStyle)}
-                onBlur={(e) => Object.assign(e.target.style, inputStyle)}
-                placeholder="Enter soil moisture"
+                className="w-full bg-white/[0.03] border border-white/10 rounded-2xl p-4 outline-none focus:border-emerald-500/50 transition-colors text-white text-sm"
+                placeholder="0"
               />
             </div>
 
-            {/* Amount of Azote */}
-            <div className="flex flex-col">
-              <label className="text-md font-medium text-gray-700">Amount of Azote (g)</label>
+            <div className="space-y-3">
+              <label className="text-[9px] font-black uppercase tracking-widest text-slate-500 flex items-center gap-2">
+                <FaVial className="text-emerald-500" /> Azote (g)
+              </label>
               <input
                 type="number"
                 value={azote}
                 onChange={(e) => setAzote(e.target.value)}
-                style={inputStyle}
-                onFocus={(e) => Object.assign(e.target.style, inputFocusStyle)}
-                onBlur={(e) => Object.assign(e.target.style, inputStyle)}
-                placeholder="Enter amount of Azote"
+                className="w-full bg-white/[0.03] border border-white/10 rounded-2xl p-4 outline-none focus:border-emerald-500/50 transition-colors text-white text-sm"
+                placeholder="0.0"
               />
             </div>
 
-            {/* Amount of Phosphorous */}
-            <div className="flex flex-col">
-              <label className="text-md font-medium text-gray-700">Amount of Phosphorous (g)</label>
+            <div className="space-y-3">
+              <label className="text-[9px] font-black uppercase tracking-widest text-slate-500">Phosphorous (g)</label>
               <input
                 type="number"
                 value={phosphorous}
                 onChange={(e) => setPhosphorous(e.target.value)}
-                style={inputStyle}
-                onFocus={(e) => Object.assign(e.target.style, inputFocusStyle)}
-                onBlur={(e) => Object.assign(e.target.style, inputStyle)}
-                placeholder="Enter amount of Phosphorous"
+                className="w-full bg-white/[0.03] border border-white/10 rounded-2xl p-4 outline-none focus:border-emerald-500/50 transition-colors text-white text-sm"
+                placeholder="0.0"
               />
             </div>
 
-            {/* Amount of Potassium */}
-            <div className="flex flex-col">
-              <label className="text-md font-medium text-gray-700">Amount of Potassium (g)</label>
+            <div className="space-y-3">
+              <label className="text-[9px] font-black uppercase tracking-widest text-slate-500">Potassium (g)</label>
               <input
                 type="number"
                 value={potassium}
                 onChange={(e) => setPotassium(e.target.value)}
-                style={inputStyle}
-                onFocus={(e) => Object.assign(e.target.style, inputFocusStyle)}
-                onBlur={(e) => Object.assign(e.target.style, inputStyle)}
-                placeholder="Enter amount of Potassium"
+                className="w-full bg-white/[0.03] border border-white/10 rounded-2xl p-4 outline-none focus:border-emerald-500/50 transition-colors text-white text-sm"
+                placeholder="0.0"
               />
             </div>
 
-            {/* Soil Type */}
-            <div className="flex flex-col">
-              <label className="text-md font-medium text-gray-700">Soil Type</label>
-              <select
-                value={soilType}
-                onChange={(e) => setSoilType(e.target.value)}
-                style={inputStyle}
-              >
-                <option value="">Select Soil Type</option>
-                <option value="Clay">Clay</option>
-                <option value="Loamy">Loamy</option>
-                <option value="Sandy">Sandy</option>
+            <div className="space-y-3">
+              <label className="text-[9px] font-black uppercase tracking-widest text-slate-500">Soil Type</label>
+              <select value={soilType} onChange={(e) => setSoilType(e.target.value)} className="w-full bg-white/[0.03] border border-white/10 rounded-2xl p-4 outline-none focus:border-emerald-500/50 transition-colors text-white text-sm">
+                <option value="" className="bg-slate-900">Select Type</option>
+                <option value="Clay" className="bg-slate-900">Clay</option>
+                <option value="Loamy" className="bg-slate-900">Loamy</option>
+                <option value="Sandy" className="bg-slate-900">Sandy</option>
               </select>
             </div>
 
-            {/* Crop Type */}
-            <div className="flex flex-col">
-              <label className="text-md font-medium text-gray-700">Crop Type</label>
-              <select
-                value={cropType}
-                onChange={(e) => setCropType(e.target.value)}
-                style={inputStyle}
-              >
-                <option value="">Select Crop Type</option>
-                <option value="Wheat">Wheat</option>
-                <option value="Rice">Rice</option>
-                <option value="Corn">Corn</option>
+            <div className="space-y-3">
+              <label className="text-[9px] font-black uppercase tracking-widest text-slate-500">Crop Type</label>
+              <select value={cropType} onChange={(e) => setCropType(e.target.value)} className="w-full bg-white/[0.03] border border-white/10 rounded-2xl p-4 outline-none focus:border-emerald-500/50 transition-colors text-white text-sm">
+                <option value="" className="bg-slate-900">Select Crop</option>
+                <option value="Wheat" className="bg-slate-900">Wheat</option>
+                <option value="Rice" className="bg-slate-900">Rice</option>
+                <option value="Corn" className="bg-slate-900">Corn</option>
               </select>
             </div>
 
-            <button
-              type="submit"
-              style={buttonStyle}
-              onMouseOver={(e) => Object.assign(e.target.style, buttonHoverStyle)}
-              onMouseOut={(e) => Object.assign(e.target.style, buttonStyle)}
-            >
-              PREDICT
+            <button type="submit" className="md:col-span-2 btn-primary !rounded-2xl !py-5 flex items-center justify-center gap-2">
+              Predict <FaArrowRight className="text-[8px]" />
             </button>
           </form>
 
           {recommendation && (
-            <div style={paragraphStyle}>
-              <p>{recommendation}</p>
+            <div className="mt-12 p-10 rounded-[2rem] bg-emerald-500/5 border border-emerald-500/20 text-emerald-400 text-xs leading-relaxed tracking-wide italic text-center">
+              {recommendation}
             </div>
           )}
         </div>
-      </div>
+      </main>
+
+      <footer className="py-20 text-center border-t border-white/5 text-[9px] font-black uppercase tracking-[1em] text-slate-800">
+        Resilient Roots Lab • Nutrient Intel
+      </footer>
     </div>
   );
 };

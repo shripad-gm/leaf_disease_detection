@@ -8,8 +8,8 @@ class ReportGenerator:
     def __init__(self):
         self.llm = ChatGroq(
             temperature=0,
-            groq_api_key="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",
-            model_name="llama3-70b-8192"
+            groq_api_key=os.getenv("GROQ_API_KEY"),
+            model_name="llama-3.3-70b-versatile"
         )
 
     def generate_report(self, severity, disease_name):
@@ -89,4 +89,4 @@ The LLM generates a detailed and structured report using the above format. Each 
             response = self.llm.invoke(input=rendered_prompt)  # Invoke the LLM with the formatted string
             return response.content  # Return the generated report
         except Exception as e:
-            raise Exception("Failed to generate the report. Please check the LLM configuration or response.") from e
+            raise Exception(f"AI Error: {str(e)}")

@@ -15,33 +15,21 @@ function App() {
   const {authUser}=useAuthContext();
   return (
     <>
-    <div >
+    <div className="min-h-screen">
         <Routes>
-        
-        <Route path="/login" element= {authUser?<Navigate to="/"/>:<Login/>}/>
-        <Route path="/signup" element= {authUser?<Navigate to="/"/>:<SignUp/>}/>
-        
+          {/* Auth Routes */}
+          <Route path="/login" element= {authUser ? <Navigate to="/"/> : <Login/>}/>
+          <Route path="/signup" element= {authUser ? <Navigate to="/"/> : <SignUp/>}/>
+          
+          {/* Feature Routes */}
+          <Route path="/" element= {<Home/>}/>
+          <Route path="/report" element= {<Report/>}/>
+          <Route path='/detect' element={<DiseaseRecognition/>} />
+          <Route path='/weather' element={<Weather/>} />
+          <Route path='/fertilizer' element={<Fertilize/>} />
         </Routes> 
         <Toaster/>
-
     </div>
-  <div >
-  <Routes>
-  {/* authUser?<Home/>:<Navigate to="/login"/> */}
-  {/* authUser?<Report/>:<Navigate to="/login"/> */}
-  {/* authUser?<About/>:<Navigate to="/login"/> */}
-  {/* authUser?<DiseaseRecognition/>:<Navigate to="/login"/> */}
-  {/* authUser?<Weather/>:<Navigate to="/login"/> */}
-  <Route path="/" element= {<Home/>}/>
-  <Route path="/report" element= {<Report/>}/>
-  {/* <Route path='/about' element={<About/>} /> */}
-  <Route path='/detect' element={<DiseaseRecognition/>} />
-  <Route path='/weather' element={<Weather/>} />
-  <Route path='/fertilizer' element={<Fertilize/>} />
-   
-  </Routes> 
-  <Toaster/>
-  </div>
   </>
   )
 }
