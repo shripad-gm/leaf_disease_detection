@@ -5,7 +5,7 @@ import { FaLeaf, FaArrowLeft, FaCloudUploadAlt, FaMicroscope, FaShieldAlt, FaCha
 const DiseaseRecognition = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
-  const [imageFile, setImageFile] = useState(null);  
+  const [imageFile, setImageFile] = useState(null);
   const [prediction, setPrediction] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -58,57 +58,75 @@ const DiseaseRecognition = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 overflow-x-hidden selection:bg-emerald-500/30 font-sans">
-      
-      {/* Home Theme Background */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-emerald-600/10 rounded-full blur-[150px] animate-pulse"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+    <div className="h-screen flex flex-col justify-between bg-slate-950 text-slate-100 overflow-y-auto selection:bg-emerald-500/30 font-sans">
+
+      {/* Dynamic Video Background */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            transform: 'scale(1.5)',
+            transformOrigin: 'top left'
+          }}
+          className="opacity-40 contrast-110 saturate-100"
+        >
+          <source src="/bg_video.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-slate-950/40"></div>
       </div>
 
       {/* Header */}
-      <nav className="relative z-50 px-12 py-10 flex justify-between items-center">
-        <Link to="/" className="flex items-center gap-4 group">
-          <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-black transition-all duration-500">
-            <FaArrowLeft />
+      <nav className="relative z-50 px-8 py-4 flex justify-between items-center border-b border-white/5 bg-slate-950/20 backdrop-blur-sm">
+        <Link to="/" className="flex items-center gap-3 group">
+          <div className="w-10 h-10 rounded-xl glass flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-black transition-all duration-500">
+            <FaArrowLeft className="text-xs" />
           </div>
-          <span className="uppercase tracking-[0.4em] text-[10px] font-black">Return Home</span>
+          <span className="uppercase tracking-[0.4em] text-[9px] font-black">Return Home</span>
         </Link>
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-black">
-            <FaLeaf />
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-black">
+            <FaLeaf className="text-xs" />
           </div>
-          <span className="uppercase tracking-[0.3em] text-[10px] font-black">Resilient Roots AI</span>
+          <span className="uppercase tracking-[0.3em] text-[9px] font-black">Resilient Roots AI</span>
         </div>
       </nav>
 
-      <main className="relative z-10 max-w-6xl mx-auto px-6 py-10 reveal-page reveal">
+      <main className="relative z-10 max-w-6xl mx-auto px-6 py-4 flex-1 flex flex-col justify-center reveal-page reveal w-full">
         {/* Title Section */}
-        <div className="text-center mb-16 space-y-4">
-          <p className="text-emerald-500 font-black tracking-[0.5em] text-[10px] uppercase">Diagnostic Engine</p>
-          <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase">Crop Disease <br /> <span className="gradient-text italic">Prediction.</span></h1>
+        <div className="text-center mb-6 space-y-1">
+          <p className="text-emerald-500 font-black tracking-[0.5em] text-[9px] uppercase">Diagnostic Engine</p>
+          <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase">Crop Disease <span className="gradient-text italic">Prediction</span></h1>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-10 items-start">
+        <div className="grid lg:grid-cols-2 gap-6 items-stretch flex-grow mb-6">
           
           {/* Upload Card - Aligned to Home Theme */}
-          <div className="glass-card !rounded-[2.5rem] !p-12 border-white/5 space-y-10">
-            <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-4xl text-emerald-500 mx-auto">
+          <div className="glass-card !rounded-[2rem] !p-8 border-white/5 flex flex-col justify-between h-full">
+            <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-2xl text-emerald-500 mx-auto">
               <FaCloudUploadAlt />
             </div>
 
-            <div className={`relative h-[400px] rounded-3xl border-2 border-dashed ${image ? 'border-emerald-500/50' : 'border-white/10'} hover:border-emerald-500/30 transition-all overflow-hidden flex flex-col items-center justify-center`}>
+            <div className={`relative flex-1 my-4 rounded-2xl border-2 border-dashed ${image ? 'border-emerald-500/50' : 'border-white/10'} hover:border-emerald-500/30 transition-all overflow-hidden flex flex-col items-center justify-center`}>
               {!image ? (
-                <div className="text-center space-y-4 px-10">
-                  <h3 className="text-xl font-black uppercase tracking-tighter">Upload Specimen</h3>
-                  <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest leading-relaxed">Drag and drop leaf sample</p>
+                <div className="text-center space-y-2 px-6">
+                  <h3 className="text-lg font-black uppercase tracking-tighter">Upload Specimen</h3>
+                  <p className="text-slate-500 text-[9px] font-bold uppercase tracking-widest leading-relaxed">Drag and drop leaf sample</p>
                   <input type="file" accept="image/*" onChange={handleImageUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
                 </div>
               ) : (
-                <div className="absolute inset-0 p-4">
-                  <img src={image} alt="Sample" className="w-full h-full object-cover rounded-2xl" />
+                <div className="absolute inset-0 p-2">
+                  <img src={image} alt="Sample" className="w-full h-full object-cover rounded-xl" />
                   <div className="absolute inset-0 bg-black/60 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <button onClick={() => {setImage(null); setImageFile(null); setPrediction('');}} className="btn-secondary !py-3 !px-6">Replace</button>
+                    <button onClick={() => { setImage(null); setImageFile(null); setPrediction(''); }} className="btn-secondary !py-2 !px-4 text-xs">Replace</button>
                   </div>
                 </div>
               )}
@@ -117,67 +135,69 @@ const DiseaseRecognition = () => {
             <button 
               onClick={handlePredict} 
               disabled={isLoading || !imageFile}
-              className="btn-primary !w-full !rounded-2xl !py-5 flex items-center justify-center gap-3"
+              className="btn-primary !w-full !rounded-xl !py-3.5 flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-wider"
             >
               {isLoading ? 'Analyzing...' : 'Predict Disease'}
-              <FaArrowRight className="text-[8px]" />
+              <FaArrowRight className="text-[6px]" />
             </button>
           </div>
 
           {/* Results Card - Aligned to Home Theme */}
-          <div className="glass-card !rounded-[2.5rem] !p-12 border-white/5 min-h-[640px] flex flex-col">
-            <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-4xl text-emerald-500 mx-auto mb-10">
+          <div className="glass-card !rounded-[2rem] !p-8 border-white/5 flex flex-col justify-between h-full">
+            <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-2xl text-emerald-500 mx-auto">
               <FaChartLine />
             </div>
 
-            <div className="flex-1 space-y-10">
+            <div className="flex-1 flex flex-col justify-center my-4">
               {!prediction && !isLoading && (
-                <div className="text-center py-20 opacity-20">
-                  <FaShieldAlt className="text-8xl mx-auto mb-6" />
-                  <p className="font-black uppercase tracking-[0.4em] text-[10px]">Awaiting Data Stream</p>
+                <div className="text-center py-6 opacity-20">
+                  <FaShieldAlt className="text-5xl mx-auto mb-3" />
+                  <p className="font-black uppercase tracking-[0.4em] text-[9px]">Awaiting Data Stream</p>
                 </div>
               )}
 
               {isLoading && (
-                <div className="py-20 text-center space-y-8">
-                  <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                  <p className="text-emerald-500 text-[10px] font-black uppercase tracking-[0.5em] animate-pulse">Syncing Neural Data</p>
+                <div className="py-6 text-center space-y-4">
+                  <div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                  <p className="text-emerald-500 text-[9px] font-black uppercase tracking-[0.5em] animate-pulse">Syncing Neural Data</p>
                 </div>
               )}
 
               {prediction && !isLoading && (
-                <div className="space-y-10 reveal active">
+                <div className="space-y-4 reveal active">
                   <div className="text-center">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-4">Diagnostic Output</p>
-                    <div className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase leading-tight p-8 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 break-words">
+                    <p className="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-2">Diagnostic Output</p>
+                    <div className="text-xl md:text-2xl font-black text-white tracking-tighter uppercase leading-tight p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 break-words">
                       {prediction.replace(/_/g, ' ')}
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-6">
-                    <div className="p-8 rounded-[2rem] bg-white/5 border border-white/10 text-center">
-                      <p className="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-2">Confidence</p>
-                      <p className="text-3xl font-black text-white">99.8%</p>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
+                      <p className="text-[8px] font-black uppercase tracking-widest text-slate-500 mb-1">Confidence</p>
+                      <p className="text-xl font-black text-white">99.8%</p>
                     </div>
-                    <div className="p-8 rounded-[2rem] bg-white/5 border border-white/10 text-center">
-                      <p className="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-2">Stability</p>
-                      <p className="text-3xl font-black text-emerald-400">High</p>
+                    <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
+                      <p className="text-[8px] font-black uppercase tracking-widest text-slate-500 mb-1">Stability</p>
+                      <p className="text-xl font-black text-emerald-400">High</p>
                     </div>
                   </div>
                 </div>
               )}
             </div>
 
-            {prediction && !isLoading && (
-              <button onClick={handleGenerateReport} className="btn-secondary !w-full !rounded-2xl !py-5 mt-10">
+            {prediction && !isLoading ? (
+              <button onClick={handleGenerateReport} className="btn-secondary !w-full !rounded-xl !py-3.5 text-xs font-bold uppercase tracking-wider">
                 Generate Report
               </button>
+            ) : (
+              <div className="h-[44px]"></div> // Placeholder spacer to keep card heights identical when button isn't shown
             )}
           </div>
         </div>
       </main>
 
-      <footer className="py-20 text-center border-t border-white/5 text-[9px] font-black uppercase tracking-[1em] text-slate-800">
+      <footer className="py-4 text-center border-t border-white/5 text-[9px] font-black uppercase tracking-[0.5em] text-slate-800 bg-slate-950/20 backdrop-blur-sm">
         Resilient Roots AI • Intelligence for Earth
       </footer>
     </div>

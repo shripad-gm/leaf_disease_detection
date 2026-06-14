@@ -5,6 +5,8 @@ import { FaLeaf, FaFlask, FaCloudSun, FaArrowRight, FaChartLine, FaSeedling, FaW
 
 // Import original assets
 import homeBg from "./HomeBG1.jpeg";
+import featuresBg from "./pic1.jpeg";
+import servicesBg from "./pic3.jpg";
 
 const Home = () => {
   return (
@@ -27,15 +29,29 @@ const Home = () => {
       {/* Banner Section (Modified for Visual Impact) */}
       <section className="relative h-[90vh] flex items-center justify-center text-center px-6 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={homeBg} alt="Banner" className="w-full h-full object-cover opacity-30 contrast-125 saturate-50 scale-105" />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            onTimeUpdate={(e) => {
+              if (e.target.currentTime >= 8) {
+                e.target.currentTime = 0;
+              }
+            }}
+            className="w-full h-full object-cover opacity-40 contrast-125 saturate-75 scale-105"
+          >
+            <source src="/resiliant_roots_ai.mp4" type="video/mp4" />
+            <img src={homeBg} alt="Banner" className="w-full h-full object-cover opacity-30 contrast-125 saturate-50 scale-105" />
+          </video>
           <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950"></div>
         </div>
         
-        <div className="relative z-10 max-w-4xl">
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-6 uppercase leading-[0.9]">
+        <div className="relative z-10 max-w-4xl mb-4">
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4 uppercase leading-[0.9]">
             Resilient <br /> <span className="gradient-text italic font-serif">Roots AI</span>
           </h1>
-          <p className="text-xl text-slate-400 mb-12 italic font-light tracking-wide">
+          <p className="text-lg text-slate-400 mb-8 italic font-light tracking-wide">
             Empowering Farmers with Disease Recognition Technology
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -50,8 +66,12 @@ const Home = () => {
       </section>
 
       {/* Features Section (Preserving Original Content) */}
-      <section id="feature" className="relative z-10 py-32 px-6 bg-white/[0.02]">
-        <div className="max-w-7xl mx-auto">
+      <section id="feature" className="relative z-10 py-32 px-6 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img src="/features_bg.png" alt="Features Background" className="w-full h-full object-cover opacity-30 contrast-110 saturate-100 scale-105" />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/40 to-slate-950"></div>
+        </div>
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20 space-y-4">
             <p className="text-emerald-500 font-black tracking-[0.5em] text-xs uppercase">Features</p>
             <h2 className="text-4xl font-black uppercase tracking-tighter">Why is it useful?</h2>
@@ -76,8 +96,12 @@ const Home = () => {
       </section>
 
       {/* Services Section (Preserving Original Content) */}
-      <section id="homepg" className="relative z-10 py-32 px-6">
-        <div className="max-w-7xl mx-auto">
+      <section id="homepg" className="relative z-10 py-32 px-6 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img src={servicesBg} alt="Services Background" className="w-full h-full object-cover opacity-20 contrast-125 saturate-50 scale-105" />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950"></div>
+        </div>
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20 space-y-4">
             <p className="text-emerald-500 font-black tracking-[0.5em] text-xs uppercase">Services</p>
             <h2 className="text-4xl font-black uppercase tracking-tighter">We Provide</h2>
