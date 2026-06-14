@@ -6,14 +6,19 @@ const useReport = () => {
   const [loading, setLoading] = useState(false);
   const { setAuthUser } = useAuthContext();
 
-  const generateReport = async (severity, diseaseName, setReport) => {
+  const generateReport = async (severity, diseaseName, setReport, imageBase64 = null) => {
     setLoading(true);
     const userId = localStorage.getItem("rr_anonymous_user_id") || "anonymous";
     try {
       const response = await fetch("http://127.0.0.1:5001/generate-report", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ severity, disease_name: diseaseName, userId }),
+        body: JSON.stringify({
+          severity,
+          disease_name: diseaseName,
+          userId,
+          imageBase64,   // sent to Flask → stored in MongoDB
+        }),
       });
 
       if (!response.ok) {

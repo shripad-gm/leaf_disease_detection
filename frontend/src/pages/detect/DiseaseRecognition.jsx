@@ -10,7 +10,6 @@ const DiseaseRecognition = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Reveal on load
     const timer = setTimeout(() => {
       document.querySelector('.reveal-page')?.classList.add('active');
     }, 100);
@@ -22,7 +21,7 @@ const DiseaseRecognition = () => {
     if (file) {
       setImage(URL.createObjectURL(file));
       setImageFile(file);
-      setPrediction(''); // Reset prediction on new upload
+      setPrediction('');
     }
   };
 
@@ -52,9 +51,21 @@ const DiseaseRecognition = () => {
     }
   };
 
+  // Convert imageFile to base64, then navigate to report page with it
   const handleGenerateReport = () => {
-    if (!prediction) return;
-    navigate("/report", { state: { diseaseName: prediction } });
+    if (!prediction || !imageFile) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64Image = reader.result; // data:image/jpeg;base64,...
+      navigate("/report", {
+        state: {
+          diseaseName: prediction,
+          imageBase64: base64Image,
+        }
+      });
+    };
+    reader.readAsDataURL(imageFile);
   };
 
   return (
@@ -109,7 +120,7 @@ const DiseaseRecognition = () => {
 
         <div className="grid lg:grid-cols-2 gap-6 items-stretch flex-grow mb-6">
           
-          {/* Upload Card - Aligned to Home Theme */}
+          {/* Upload Card */}
           <div className="glass-card !rounded-[2rem] !p-8 border-white/5 flex flex-col justify-between h-full">
             <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-2xl text-emerald-500 mx-auto">
               <FaCloudUploadAlt />
@@ -142,7 +153,7 @@ const DiseaseRecognition = () => {
             </button>
           </div>
 
-          {/* Results Card - Aligned to Home Theme */}
+          {/* Results Card */}
           <div className="glass-card !rounded-[2rem] !p-8 border-white/5 flex flex-col justify-between h-full">
             <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-2xl text-emerald-500 mx-auto">
               <FaChartLine />
@@ -191,7 +202,7 @@ const DiseaseRecognition = () => {
                 Generate Report
               </button>
             ) : (
-              <div className="h-[44px]"></div> // Placeholder spacer to keep card heights identical when button isn't shown
+              <div className="h-[44px]"></div>
             )}
           </div>
         </div>

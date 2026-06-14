@@ -168,26 +168,65 @@ const HistoryPage = () => {
 
     // Header Blocks based on report type
     if (item.type === "disease") {
-      doc.setFillColor(248, 252, 250);
-      doc.rect(15, 45, 180, 25, 'F');
-      doc.setDrawColor(16, 185, 129);
-      doc.setLineWidth(0.4);
-      doc.rect(15, 45, 180, 25, 'D');
-
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(8);
-      doc.setTextColor(120, 120, 120);
-      doc.text("PRIMARY IDENTIFICATION:", 20, 52);
-      doc.setFontSize(16);
-      doc.setTextColor(0, 80, 60);
-      doc.text((item.metadata.diseaseName || "Unknown Disease").toUpperCase(), 20, 63);
-
-      doc.setFontSize(8);
-      doc.text("ANALYSIS SEVERITY:", 145, 52);
-      doc.setTextColor(200, 50, 50);
-      doc.setFontSize(14);
-      doc.text((item.metadata.severity || "MILD").toUpperCase(), 145, 63);
-      y = 82;
+      if (item.metadata.imageBase64) {
+        try {
+          const imgFmt = item.metadata.imageBase64.startsWith('data:image/png') ? 'PNG' : 'JPEG';
+          doc.addImage(item.metadata.imageBase64, imgFmt, 15, 45, 50, 40);
+          doc.setFillColor(248, 252, 250);
+          doc.rect(70, 45, 125, 40, 'F');
+          doc.setDrawColor(16, 185, 129);
+          doc.setLineWidth(0.4);
+          doc.rect(70, 45, 125, 40, 'D');
+          doc.setFont("helvetica", "bold");
+          doc.setFontSize(8);
+          doc.setTextColor(120, 120, 120);
+          doc.text("PRIMARY IDENTIFICATION:", 75, 54);
+          doc.setFontSize(13);
+          doc.setTextColor(0, 80, 60);
+          doc.text((item.metadata.diseaseName || "Unknown Disease").toUpperCase(), 75, 65);
+          doc.setFontSize(8);
+          doc.setTextColor(120, 120, 120);
+          doc.text("SEVERITY:", 75, 74);
+          doc.setTextColor(200, 50, 50);
+          doc.setFontSize(11);
+          doc.text((item.metadata.severity || "MILD").toUpperCase(), 75, 82);
+          y = 97;
+        } catch {
+          // fallback without image
+          doc.setFillColor(248, 252, 250);
+          doc.rect(15, 45, 180, 25, 'F');
+          doc.setDrawColor(16, 185, 129);
+          doc.setLineWidth(0.4);
+          doc.rect(15, 45, 180, 25, 'D');
+          doc.setFont("helvetica", "bold");
+          doc.setFontSize(8);
+          doc.setTextColor(120, 120, 120);
+          doc.text("PRIMARY IDENTIFICATION:", 20, 52);
+          doc.setFontSize(16);
+          doc.setTextColor(0, 80, 60);
+          doc.text((item.metadata.diseaseName || "Unknown Disease").toUpperCase(), 20, 63);
+          y = 82;
+        }
+      } else {
+        doc.setFillColor(248, 252, 250);
+        doc.rect(15, 45, 180, 25, 'F');
+        doc.setDrawColor(16, 185, 129);
+        doc.setLineWidth(0.4);
+        doc.rect(15, 45, 180, 25, 'D');
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(8);
+        doc.setTextColor(120, 120, 120);
+        doc.text("PRIMARY IDENTIFICATION:", 20, 52);
+        doc.setFontSize(16);
+        doc.setTextColor(0, 80, 60);
+        doc.text((item.metadata.diseaseName || "Unknown Disease").toUpperCase(), 20, 63);
+        doc.setFontSize(8);
+        doc.text("ANALYSIS SEVERITY:", 145, 52);
+        doc.setTextColor(200, 50, 50);
+        doc.setFontSize(14);
+        doc.text((item.metadata.severity || "MILD").toUpperCase(), 145, 63);
+        y = 82;
+      }
     } else {
       doc.setFillColor(248, 252, 250);
       doc.rect(15, 45, 180, 30, 'F');
@@ -423,17 +462,24 @@ const HistoryPage = () => {
                   className={`glass-card !rounded-2xl !p-5 border-white/5 cursor-pointer hover:border-emerald-500/30 transition-all flex justify-between items-center group relative overflow-hidden ${selectedItem?._id === item._id ? 'bg-emerald-500/[0.04] border-emerald-500/30' : ''}`}
                 >
                   <div className="flex items-center gap-4 relative z-10">
-                    <div className={`w-12 h-12 rounded-xl border flex items-center justify-center text-xl transition-colors duration-500 ${item.type === 'disease' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-black' : 'bg-blue-500/10 border-blue-500/20 text-blue-400 group-hover:bg-blue-500 group-hover:text-white'}`}>
-                      {item.type === 'disease' ? <FaLeaf /> : <FaFlask />}
-                    </div>
+                    {/* Leaf image thumbnail or icon */}
+                    {item.type === 'disease' && item.metadata.imageBase64 ? (
+                      <div className="w-12 h-12 rounded-xl overflow-hidden border border-emerald-500/30 flex-shrink-0">
+                        <img src={item.metadata.imageBase64} alt="Leaf" className="w-full h-full object-cover" />
+                      </div>
+                    ) : (
+                      <div className={`w-12 h-12 rounded-xl border flex items-center justify-center text-xl transition-colors duration-500 ${item.type === 'disease' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-black' : 'bg-blue-500/10 border-blue-500/20 text-blue-400 group-hover:bg-blue-500 group-hover:text-white'}`}>
+                        {item.type === 'disease' ? <FaLeaf /> : <FaFlask />}
+                      </div>
+                    )}
                     <div>
                       <span className={`text-[8px] font-black uppercase tracking-[0.2em] mb-1 block ${item.type === 'disease' ? 'text-emerald-400' : 'text-blue-400'}`}>
                         {item.type === 'disease' ? 'Disease Diagnosis' : 'Fertilizer Recommendation'}
                       </span>
                       <h4 className="text-sm font-black uppercase tracking-tight text-white group-hover:text-emerald-400 transition-colors">
                         {item.type === 'disease' 
-                          ? (item.metadata.get ? item.metadata.get('diseaseName') : item.metadata.diseaseName || 'Diagnostic Report')
-                          : `Crop: ${item.metadata.get ? item.metadata.get('cropType') : item.metadata.cropType || 'Fertilizer'}`}
+                          ? (item.metadata.diseaseName || 'Diagnostic Report')
+                          : `Crop: ${item.metadata.cropType || 'Fertilizer'}`}
                       </h4>
                       <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-1.5 mt-1">
                         <FaCalendarAlt className="text-[8px]" /> {new Date(item.createdAt).toLocaleString()}
@@ -484,6 +530,15 @@ const HistoryPage = () => {
                   </button>
                 </div>
               </div>
+
+              {/* Leaf image in detail view */}
+              {selectedItem.type === 'disease' && selectedItem.metadata.imageBase64 && (
+                <div className="mb-6 flex justify-center">
+                  <div className="w-40 h-40 rounded-2xl overflow-hidden border-2 border-emerald-500/30 shadow-[0_0_40px_rgba(52,211,153,0.1)]">
+                    <img src={selectedItem.metadata.imageBase64} alt="Leaf specimen" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+              )}
 
               {/* Parameters block in Detail view */}
               <div className="grid grid-cols-2 gap-3 mb-6 p-4 rounded-xl bg-white/[0.02] border border-white/5 text-[10px]">

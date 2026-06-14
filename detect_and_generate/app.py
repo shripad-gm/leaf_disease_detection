@@ -83,6 +83,7 @@ def generate_report():
         severity = data.get("severity")
         disease_name = data.get("disease_name")
         user_id = data.get("userId", "anonymous")
+        image_base64 = data.get("imageBase64")
 
         if not disease_name or not severity:
             return jsonify({"error": "Invalid input"}), 400
@@ -92,7 +93,7 @@ def generate_report():
             user_id=user_id,
             record_type="disease",
             report_text=report,
-            metadata={"diseaseName": disease_name, "severity": severity}
+            metadata={"diseaseName": disease_name, "severity": severity, "imageBase64": image_base64}
         )
         return jsonify({"report": report})
     except Exception as e:
