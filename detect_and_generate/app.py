@@ -5,7 +5,7 @@ load_dotenv()
 import os
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
-from chain import ReportGenerator  # Import your ReportGenerator class
+from chain import ReportGenerator, FertilizerRecommender  # Import your ReportGenerator and FertilizerRecommender classes
 from dlmodel import predict_name
 
 app = Flask(__name__)
@@ -16,6 +16,7 @@ if not os.path.exists('uploads'):
     os.makedirs('uploads')
 
 report_generator = ReportGenerator()
+fertilizer_recommender = FertilizerRecommender()
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
@@ -37,6 +38,40 @@ def generate_report():
         return jsonify({"report": report})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route("/recommend-fertilizer", methods=["POST"])
+def recommend_fertilizer():
+    try:
+        data = request.json
+        soil_temp = data.get("soilTemp")
+        soil_humidity = data.get("soilHumidity")
+        soil_moisture = data.get("soilMoisture")
+        azote = data.get("azote")
+        phosphorous = data.get("phosphorous")
+        potassium = data.get("potassium")
+        soil_type = data.get("soilType")
+        crop_type = data.get("cropType")
+
+        # Basic check (empty strings or None values)
+        required_fields = [soil_temp, soil_humidity, soil_moisture, azote, phosphorous, potassium, soil_type, crop_type]
+        if any(v is None or str(v).strip() == "" for v in required_fields):
+            return jsonify({"error": "Incomplete parameter values. All parameters are required."}), 400
+
+        recommendation = fertilizer_recommender.generate_recommendation(
+            soil_temp=soil_temp,
+            soil_humidity=soil_humidity,
+            soil_moisture=soil_moisture,
+            azote=azote,
+            phosphorous=phosphorous,
+            potassium=potassium,
+            soil_type=soil_type,
+            crop_type=crop_type
+        )
+        return jsonify({"recommendation": recommendation})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 
 
