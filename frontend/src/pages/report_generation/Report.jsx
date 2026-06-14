@@ -33,7 +33,7 @@ const ReportGenerator = () => {
       // Handle Markdown Tables
       if (line.startsWith('|')) {
         if (!inTable) {
-          html.push('<div class="overflow-x-auto my-6"><table class="w-full border-collapse border border-emerald-500/30 bg-emerald-500/5 text-xs">');
+          html.push('<div class="overflow-x-auto my-6"><table class="w-full border-collapse border border-emerald-500/30 bg-emerald-500/5 text-sm">');
           inTable = true;
         }
         let cells = line.split('|').filter(c => c.trim() !== '' || line.indexOf('|'+c+'|') !== -1);
@@ -237,67 +237,82 @@ const ReportGenerator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 overflow-x-hidden selection:bg-emerald-500/30 font-sans">
+    <div className="h-screen flex flex-col justify-between bg-slate-950 text-slate-100 overflow-y-auto selection:bg-emerald-500/30 font-sans">
       
-      {/* Dynamic Background */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-emerald-500/10 rounded-full blur-[150px] animate-pulse"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-emerald-600/10 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+      {/* Dynamic Background Image */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <img
+          src="/report_bg.png"
+          alt="Report Background"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            transform: 'scale(1.15)',
+            transformOrigin: 'top left'
+          }}
+          className="opacity-40 contrast-115 saturate-110"
+        />
+        <div className="absolute inset-0 bg-slate-950/45"></div>
       </div>
 
+
       {/* Navigation */}
-      <nav className="relative z-50 px-10 py-8 flex justify-between items-center border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
-        <Link to="/" className="flex items-center gap-4 group">
-          <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-emerald-400 group-hover:bg-emerald-400 group-hover:text-black transition-all shadow-[0_0_20px_rgba(52,211,153,0.2)]">
-            <FaArrowLeft />
+      <nav className="relative z-50 px-8 py-4 flex justify-between items-center border-b border-white/5 bg-slate-950/20 backdrop-blur-sm">
+        <Link to="/" className="flex items-center gap-3 group">
+          <div className="w-10 h-10 rounded-xl glass flex items-center justify-center text-emerald-400 group-hover:bg-emerald-400 group-hover:text-black transition-all shadow-[0_0_20px_rgba(52,211,153,0.2)]">
+            <FaArrowLeft className="text-xs" />
           </div>
-          <span className="uppercase tracking-[0.4em] text-[10px] font-black text-slate-400 group-hover:text-white transition-colors">Archive Access</span>
+          <span className="uppercase tracking-[0.4em] text-[9px] font-black text-slate-400 group-hover:text-white transition-colors">Return</span>
         </Link>
         <div className="flex items-center gap-4">
-          <div className="px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></div>
-            <span className="uppercase tracking-[0.2em] text-[9px] font-black text-emerald-400">Live Engine</span>
+          <div className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></div>
+            <span className="uppercase tracking-[0.2em] text-[8px] font-black text-emerald-400">Live Engine</span>
           </div>
         </div>
       </nav>
 
-      <main className="relative z-10 max-w-5xl mx-auto px-6 py-16">
+      <main className="relative z-10 max-w-5xl mx-auto px-6 py-4 flex-grow flex flex-col justify-center w-full">
         
         {/* Header */}
-        <div className="text-center mb-20 space-y-6">
-           <p className="text-emerald-400 font-black tracking-[0.6em] text-[11px] uppercase italic">Precision Intelligence</p>
-           <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-none drop-shadow-2xl">
-             Remediation <br /> <span className="gradient-text italic">Protocol.</span>
+        <div className="text-center mb-6 space-y-1">
+           <p className="text-emerald-400 font-black tracking-[0.5em] text-[9px] uppercase italic">Precision Intelligence</p>
+           <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase leading-none">
+             Remediation <span className="gradient-text italic">Protocol</span>
            </h1>
         </div>
 
-        <div className="grid gap-12">
+        <div className="grid gap-6">
           
           {/* Controls Card */}
           {!report && (
-            <div className="glass-card !rounded-[3rem] !p-16 border-white/10 text-center space-y-12 shadow-2xl relative overflow-hidden group">
+            <div className="glass-card !rounded-[2rem] !p-8 border-white/10 text-center space-y-6 shadow-2xl relative overflow-hidden group max-w-2xl mx-auto w-full">
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
-              <div className="w-24 h-24 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-5xl text-emerald-400 mx-auto shadow-[0_0_40px_rgba(52,211,153,0.1)]">
+              <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-3xl text-emerald-400 mx-auto shadow-[0_0_40px_rgba(52,211,153,0.1)]">
                 <FaMagic className="animate-pulse" />
               </div>
               
-              <div className="space-y-6 relative z-10">
-                <h3 className="text-3xl font-black tracking-tighter uppercase">Generate Action Plan</h3>
-                <p className="text-slate-400 text-xs font-bold uppercase tracking-[0.4em] max-w-md mx-auto leading-loose">
+              <div className="space-y-3 relative z-10">
+                <h3 className="text-2xl font-black tracking-tighter uppercase">Generate Action Plan</h3>
+                <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.4em] max-w-md mx-auto leading-relaxed">
                   Synthesizing medical-grade remediation <br />
-                  <span className="text-emerald-400 text-sm">{diseaseName || "System Idle"}</span>
+                  <span className="text-emerald-400 text-xs mt-1 block">{diseaseName || "System Idle"}</span>
                 </p>
               </div>
 
               <button
                 onClick={handleClick}
                 disabled={loading || !diseaseName}
-                className={`group relative px-12 py-6 bg-emerald-500 text-black font-black uppercase tracking-widest rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(52,211,153,0.3)] ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`group relative px-8 py-4 bg-emerald-500 text-black font-black uppercase tracking-widest text-xs rounded-xl transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(52,211,153,0.3)] ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 <span className="flex items-center gap-3">
                   {loading ? 'Processing Data...' : 'Initialize Generation'}
-                  {!loading && <FaMagic className="text-sm group-hover:rotate-12 transition-transform" />}
+                  {!loading && <FaMagic className="text-xs group-hover:rotate-12 transition-transform" />}
                 </span>
               </button>
             </div>
@@ -305,20 +320,20 @@ const ReportGenerator = () => {
 
           {/* Enhanced Results Box */}
           {report && (
-            <div className="glass-card !rounded-[3rem] !p-12 border-emerald-500/20 shadow-[0_0_100px_rgba(16,185,129,0.1)] reveal active">
-               <div className="flex justify-between items-center mb-12 pb-8 border-b border-white/10">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
+            <div className="glass-card !rounded-[2rem] !p-6 border-emerald-500/20 shadow-[0_0_100px_rgba(16,185,129,0.1)] reveal active max-w-4xl mx-auto w-full">
+               <div className="flex justify-between items-center mb-6 pb-4 border-b border-white/10">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-xs">
                        <FaShieldAlt className="text-emerald-400" />
                     </div>
                     <div>
-                      <span className="text-[11px] font-black uppercase tracking-[0.2em] text-emerald-400 block">Verified Protocol</span>
-                      <span className="text-[9px] font-bold uppercase tracking-widest text-slate-500 italic">Secure Output 882-X</span>
+                       <span className="text-[9px] font-black uppercase tracking-[0.2em] text-emerald-400 block leading-none">Verified Protocol</span>
+                       <span className="text-[8px] font-bold uppercase tracking-widest text-slate-500 italic">Secure Output 882-X</span>
                     </div>
                   </div>
                   <button 
                     onClick={downloadReport} 
-                    className="group px-6 py-3 bg-white/5 hover:bg-emerald-500 hover:text-black border border-white/10 hover:border-emerald-500 rounded-xl transition-all flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em]"
+                    className="group px-4 py-2 bg-white/5 hover:bg-emerald-500 hover:text-black border border-white/10 hover:border-emerald-500 rounded-lg transition-all flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em]"
                   >
                     Download PDF <FaFileDownload className="group-hover:translate-y-0.5 transition-transform" />
                   </button>
@@ -326,20 +341,20 @@ const ReportGenerator = () => {
 
                {/* Rich Text Area */}
                <div className="relative group">
-                 <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                 <div className="relative bg-slate-900/40 border border-white/5 rounded-[2rem] p-12 max-h-[600px] overflow-y-auto custom-scrollbar shadow-inner">
-                    <div 
-                      className="prose prose-invert max-w-none"
-                      dangerouslySetInnerHTML={{ __html: formatReport(report) }}
-                    />
-                 </div>
+                  <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                  <div className="relative bg-slate-900/40 border border-white/5 rounded-2xl p-6 max-h-[480px] overflow-y-auto custom-scrollbar shadow-inner">
+                     <div 
+                       className="prose prose-invert max-w-none text-sm md:text-base"
+                       dangerouslySetInnerHTML={{ __html: formatReport(report) }}
+                     />
+                  </div>
                </div>
 
-               <div className="mt-12 flex flex-col md:flex-row gap-6 justify-center">
-                  <button onClick={downloadReport} className="group px-10 py-5 bg-emerald-500 text-black font-black uppercase tracking-widest rounded-2xl transition-all hover:shadow-[0_15px_30px_rgba(52,211,153,0.3)] flex items-center gap-3">
+               <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
+                  <button onClick={downloadReport} className="group px-8 py-4 bg-emerald-500 text-black font-black uppercase tracking-widest text-xs rounded-xl transition-all hover:shadow-[0_15px_30px_rgba(52,211,153,0.3)] flex items-center gap-2 justify-center">
                     Export Official PDF <FaFileDownload />
                   </button>
-                  <button onClick={() => window.location.reload()} className="px-10 py-5 bg-white/5 hover:bg-white/10 text-white font-black uppercase tracking-widest rounded-2xl border border-white/10 transition-all">
+                  <button onClick={() => window.location.reload()} className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-black uppercase tracking-widest text-xs rounded-xl border border-white/10 transition-all justify-center">
                     Reset Analysis
                   </button>
                </div>
@@ -349,8 +364,8 @@ const ReportGenerator = () => {
         </div>
       </main>
 
-      <footer className="py-24 text-center border-t border-white/5">
-        <p className="text-[10px] font-black uppercase tracking-[1.5em] text-slate-700">Resilient Roots AI • Global Registry</p>
+      <footer className="py-4 text-center border-t border-white/5 text-[9px] font-black uppercase tracking-[0.5em] text-slate-800 bg-slate-950/20 backdrop-blur-sm">
+        Resilient Roots AI • Global Registry
       </footer>
     </div>
   );

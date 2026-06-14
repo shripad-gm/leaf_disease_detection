@@ -14,55 +14,83 @@ const Login = () => {
 		await login(username, password);
 	};
 
-	return (
-		<div className='p-4 h-screen flex items-center justify-center'>
-		<div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
-			<div className='w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
-				<h1 className='text-3xl font-semibold text-center text-gray-300'>
-					Login
-					<span className='text-green-900'> Resilence root</span>
-				</h1>
+  return (
+    <div className='p-4 h-screen flex items-center justify-center bg-slate-950 text-slate-100 overflow-hidden font-sans relative'>
+      
+      {/* Background Image */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <img
+          src="/features_bg.png"
+          alt="Login Background"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            transform: 'scale(1.15)',
+            transformOrigin: 'top left'
+          }}
+          className="opacity-25 contrast-110 saturate-100"
+        />
+        <div className="absolute inset-0 bg-slate-950/70"></div>
+      </div>
 
-				<form onSubmit={handleSubmit}>
-					<div>
-						<label className='label p-2'>
-							<span className='text-base label-text'>Username</span>
-						</label>
-						<input
-							type='text'
-							placeholder='Enter username'
-							className='w-full input input-bordered h-10'
-							value={username}
-							onChange={(e) => setUsername(e.target.value)}
-						/>
-					</div>
+      <div className='relative z-10 flex flex-col items-center justify-center min-w-[380px] mx-auto'>
+        <div className='w-full p-8 rounded-[2rem] border border-white/10 bg-slate-900/40 backdrop-blur-xl shadow-2xl'>
+          <h1 className='text-3xl font-black text-center text-white uppercase tracking-tight mb-6'>
+            Login <span className='gradient-text italic font-serif block text-lg mt-1 tracking-normal normal-case'>Resilient Roots</span>
+          </h1>
 
-					<div>
-						<label className='label'>
-							<span className='text-base label-text'>Password</span>
-						</label>
-						<input
-							type='password'
-							placeholder='Enter Password'
-							className='w-full input input-bordered h-10'
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-					</div>
-					<Link to='/signup' className='text-sm  hover:underline hover:text-blue-600 mt-2 inline-block'>
-						{"Don't"} have an account?
-					</Link>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-1">
+              <label className='block text-[10px] font-black uppercase tracking-widest text-slate-400'>
+                Username
+              </label>
+              <input
+                type='text'
+                placeholder='Enter username'
+                className='w-full bg-white/[0.03] border border-white/10 rounded-xl p-3 outline-none focus:border-emerald-500/50 transition-colors text-white text-sm'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
 
-					<div>
-						<button className='btn btn-block btn-sm mt-2' disabled={loading}>
-							{loading ? <span className='loading loading-spinner '></span> : "Login"}
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-		</div>
-	);
+            <div className="space-y-1">
+              <label className='block text-[10px] font-black uppercase tracking-widest text-slate-400'>
+                Password
+              </label>
+              <input
+                type='password'
+                placeholder='Enter Password'
+                className='w-full bg-white/[0.03] border border-white/10 rounded-xl p-3 outline-none focus:border-emerald-500/50 transition-colors text-white text-sm'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            
+            <div className="flex justify-between items-center pt-2">
+              <Link to='/signup' className='text-xs text-emerald-400 hover:text-emerald-300 transition-colors font-bold uppercase tracking-wider'>
+                Create Account
+              </Link>
+            </div>
+
+            <div className="pt-2">
+              <button 
+                type="submit" 
+                className='w-full py-3.5 bg-emerald-500 hover:bg-emerald-400 text-black font-black uppercase tracking-widest text-xs rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_10px_30px_rgba(52,211,153,0.2)]'
+                disabled={loading}
+              >
+                {loading ? <span className="loading loading-spinner loading-xs"></span> : "Login"}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+
 };
 export default Login;
 

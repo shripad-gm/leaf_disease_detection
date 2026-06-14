@@ -24,14 +24,11 @@ const FertilizationForm = () => {
   return (
     <div className="h-screen flex flex-col justify-between bg-slate-950 text-slate-100 overflow-y-auto selection:bg-emerald-500/30 font-sans">
       
-      {/* Dynamic Background (Video with Image Fallback) */}
+      {/* Dynamic Background Image */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          poster="/fertilizer_bg.png"
+        <img
+          src="/fertilizer_bg.png"
+          alt="Fertilizer Background"
           style={{
             position: 'absolute',
             top: 0,
@@ -42,12 +39,11 @@ const FertilizationForm = () => {
             transform: 'scale(1.15)',
             transformOrigin: 'top left'
           }}
-          className="opacity-25 contrast-110 saturate-100"
-        >
-          <source src="/fertilizer_bg.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-slate-950/70"></div>
+          className="opacity-40 contrast-115 saturate-110"
+        />
+        <div className="absolute inset-0 bg-slate-950/45"></div>
       </div>
+
 
       {/* Navigation */}
       <nav className="relative z-50 px-8 py-4 flex justify-between items-center border-b border-white/5 bg-slate-950/20 backdrop-blur-sm">
