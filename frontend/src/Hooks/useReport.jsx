@@ -8,11 +8,12 @@ const useReport = () => {
 
   const generateReport = async (severity, diseaseName, setReport) => {
     setLoading(true);
+    const userId = localStorage.getItem("rr_anonymous_user_id") || "anonymous";
     try {
       const response = await fetch("http://127.0.0.1:5001/generate-report", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ severity, disease_name: diseaseName }),
+        body: JSON.stringify({ severity, disease_name: diseaseName, userId }),
       });
 
       if (!response.ok) {
@@ -21,12 +22,9 @@ const useReport = () => {
       }
 
       const data = await response.json();
-      if (data.error) {
-        throw new Error(data.error);
-      }
+      if (data.error) throw new Error(data.error);
 
-      // setAuthUser(data); // Removed bug: This was incorrectly overwriting user auth state with report data
-      setReport(data.report); // Set the report content in state
+      setReport(data.report);
     } catch (error) {
       console.error("Error generating report:", error);
       toast.error(`Failed to generate report: ${error.message}`);
