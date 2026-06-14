@@ -1,7 +1,7 @@
 import React from "react";
 import "tailwindcss/tailwind.css";
 import { Link } from "react-router-dom";
-import { FaLeaf, FaFlask, FaCloudSun, FaArrowRight, FaChartLine, FaSeedling, FaWallet } from "react-icons/fa";
+import { FaLeaf, FaFlask, FaCloudSun, FaArrowRight, FaChartLine, FaSeedling, FaWallet, FaHistory } from "react-icons/fa";
 
 // Import original assets
 import homeBg from "./HomeBG1.jpeg";
@@ -9,6 +9,14 @@ import featuresBg from "./pic1.jpeg";
 import servicesBg from "./pic3.jpg";
 
 const Home = () => {
+  React.useEffect(() => {
+    let userId = localStorage.getItem("rr_anonymous_user_id");
+    if (!userId) {
+      userId = `rr-user-${Math.random().toString(36).substring(2, 15)}-${Date.now().toString(36)}`;
+      localStorage.setItem("rr_anonymous_user_id", userId);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-950 text-white selection:bg-emerald-500/30 font-sans">
       
@@ -107,20 +115,21 @@ const Home = () => {
             <h2 className="text-4xl font-black uppercase tracking-tighter">We Provide</h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: <FaLeaf />, title: "Crop Disease prediction", desc: "Analyzes soil and weather data to find the best-suited crop.", link: "/detect" },
-              { icon: <FaFlask />, title: "Fertilizer Recommendation", desc: "Analyzes soil and weather data to find the best-suited crop.", link: "/fertilizer" },
-              { icon: <FaCloudSun />, title: "Weather prediction", desc: "Analyzes soil and weather data to find the best-suited crop.", link: "/weather" }
+              { icon: <FaLeaf />, title: "Crop Disease prediction", desc: "Predicts plant diseases based on uploaded leaf images.", link: "/detect", btnText: "Predict" },
+              { icon: <FaFlask />, title: "Fertilizer Recommendation", desc: "Analyzes N-P-K levels and soil parameters to recommend fertilizers.", link: "/fertilizer", btnText: "Recommend" },
+              { icon: <FaCloudSun />, title: "Weather prediction", desc: "Provides weather forecasts to optimize your farming schedules.", link: "/weather", btnText: "Check Weather" },
+              { icon: <FaHistory className="text-emerald-500" />, title: "Agricultural History", desc: "View and download your past disease diagnosis and fertilizer reports.", link: "/history", btnText: "View History" }
             ].map((service, i) => (
               <div key={i} className="glass-card text-center flex flex-col items-center group">
                 <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-3xl mb-10 group-hover:bg-emerald-500 group-hover:text-black transition-all duration-500">
                   {service.icon}
                 </div>
-                <h3 className="text-xl font-black mb-4 uppercase tracking-tighter">{service.title}</h3>
-                <p className="text-slate-500 text-sm mb-10 leading-relaxed">{service.desc}</p>
-                <Link to={service.link} className="btn-primary !w-full !rounded-xl !py-4 flex items-center justify-center gap-2">
-                  Predict <FaArrowRight className="text-[8px]" />
+                <h3 className="text-xl font-black mb-4 uppercase tracking-tighter leading-tight min-h-[56px] flex items-center justify-center">{service.title}</h3>
+                <p className="text-slate-500 text-xs mb-10 leading-relaxed min-h-[50px]">{service.desc}</p>
+                <Link to={service.link} className="btn-primary !w-full !rounded-xl !py-4 flex items-center justify-center gap-2 mt-auto">
+                  {service.btnText} <FaArrowRight className="text-[8px]" />
                 </Link>
               </div>
             ))}

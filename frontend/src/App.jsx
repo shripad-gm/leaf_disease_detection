@@ -10,6 +10,7 @@ import Report from "./pages/report_generation/Report"
 // import About from './pages/components/About'
 import DiseaseRecognition from './pages/detect/DiseaseRecognition'
 import Fertilize from './pages/Fertilizer/fertilizer'
+import History from './pages/History/history'
 
 function App() {
   const { authUser } = useAuthContext();
@@ -27,6 +28,7 @@ function App() {
           <Route path='/detect' element={<DiseaseRecognition />} />
           <Route path='/weather' element={<Weather />} />
           <Route path='/fertilizer' element={<Fertilize />} />
+          <Route path='/history' element={<History />} />
         </Routes>
         <Toaster />
       </div>

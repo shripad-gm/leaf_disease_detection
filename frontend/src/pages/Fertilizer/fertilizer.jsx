@@ -29,7 +29,37 @@ const FertilizationForm = () => {
         potassium: Number(potassium),
         soilType,
         cropType
-      }, setRecommendation);
+      }, async (recText) => {
+        setRecommendation(recText);
+        try {
+          let userId = localStorage.getItem("rr_anonymous_user_id");
+          if (!userId) {
+            userId = `rr-user-${Math.random().toString(36).substring(2, 15)}-${Date.now().toString(36)}`;
+            localStorage.setItem("rr_anonymous_user_id", userId);
+          }
+          await fetch("/api/history", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              userId,
+              type: "fertilizer",
+              metadata: {
+                soilTemp,
+                soilHumidity,
+                soilMoisture,
+                azote,
+                phosphorous,
+                potassium,
+                soilType,
+                cropType
+              },
+              report: recText
+            })
+          });
+        } catch (err) {
+          console.error("Failed to save history to MongoDB:", err);
+        }
+      });
     } else {
       setRecommendation('Error: Incomplete data profile. All parameters are required for precision calculation.');
     }

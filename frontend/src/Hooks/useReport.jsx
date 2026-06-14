@@ -9,7 +9,7 @@ const useReport = () => {
   const generateReport = async (severity, diseaseName, setReport) => {
     setLoading(true);
     try {
-      const response = await fetch("http://127.0.0.1:5000/generate-report", {
+      const response = await fetch("http://127.0.0.1:5001/generate-report", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ severity, disease_name: diseaseName }),

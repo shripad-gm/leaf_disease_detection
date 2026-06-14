@@ -17,7 +17,28 @@ const ReportGenerator = () => {
       alert("No disease data detected. Please perform analysis first.");
       return;
     }
-    await generateReport(severity, diseaseName, setReport);
+    await generateReport(severity, diseaseName, async (reportText) => {
+      setReport(reportText);
+      try {
+        let userId = localStorage.getItem("rr_anonymous_user_id");
+        if (!userId) {
+          userId = `rr-user-${Math.random().toString(36).substring(2, 15)}-${Date.now().toString(36)}`;
+          localStorage.setItem("rr_anonymous_user_id", userId);
+        }
+        await fetch("/api/history", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId,
+            type: "disease",
+            metadata: { diseaseName, severity },
+            report: reportText
+          })
+        });
+      } catch (err) {
+        console.error("Failed to save history to MongoDB:", err);
+      }
+    });
   };
 
   // Enhanced formatter to handle tables and multi-page logic
