@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { jsPDF } from 'jspdf';
 import { FaLeaf, FaArrowLeft, FaFlask, FaVial, FaWater, FaThermometerHalf, FaSun, FaArrowRight, FaFileDownload, FaShieldAlt } from 'react-icons/fa';
 import useFertilizer from '../../Hooks/useFertilizer';
+import { useAuthContext } from '../../context/AuthContext';
 
 const FertilizationForm = () => {
+  const { authUser } = useAuthContext();
   const [soilTemp, setSoilTemp] = useState('');
   const [soilHumidity, setSoilHumidity] = useState('');
   const [soilMoisture, setSoilMoisture] = useState('');
@@ -29,36 +31,8 @@ const FertilizationForm = () => {
         potassium: Number(potassium),
         soilType,
         cropType
-      }, async (recText) => {
+      }, (recText) => {
         setRecommendation(recText);
-        try {
-          let userId = localStorage.getItem("rr_anonymous_user_id");
-          if (!userId) {
-            userId = `rr-user-${Math.random().toString(36).substring(2, 15)}-${Date.now().toString(36)}`;
-            localStorage.setItem("rr_anonymous_user_id", userId);
-          }
-          await fetch("/api/history", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              userId,
-              type: "fertilizer",
-              metadata: {
-                soilTemp,
-                soilHumidity,
-                soilMoisture,
-                azote,
-                phosphorous,
-                potassium,
-                soilType,
-                cropType
-              },
-              report: recText
-            })
-          });
-        } catch (err) {
-          console.error("Failed to save history to MongoDB:", err);
-        }
       });
     } else {
       setRecommendation('Error: Incomplete data profile. All parameters are required for precision calculation.');
@@ -323,11 +297,19 @@ const FertilizationForm = () => {
           </div>
           <span className="uppercase tracking-[0.4em] text-[9px] font-black">Return Home</span>
         </Link>
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-black">
-            <FaFlask className="text-xs" />
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-black">
+              <FaFlask className="text-xs" />
+            </div>
+            <span className="uppercase tracking-[0.3em] text-[9px] font-black mr-2">Nutrient Lab</span>
           </div>
-          <span className="uppercase tracking-[0.3em] text-[9px] font-black">Nutrient Lab</span>
+          {authUser && (
+            <Link to="/profile" className="flex items-center gap-2 hover:opacity-85 transition-opacity">
+              <img src={authUser.profilepic} alt="Profile" className="w-8 h-8 rounded-full border border-emerald-500/30" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 hidden md:inline">{authUser.username}</span>
+            </Link>
+          )}
         </div>
       </nav>
 

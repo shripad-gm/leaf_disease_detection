@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { useAuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
 
 const useFertilizer = () => {
   const [loading, setLoading] = useState(false);
+  const { authUser } = useAuthContext();
 
   const getRecommendation = async (params, setRecommendation) => {
     setLoading(true);
-    const userId = localStorage.getItem("rr_anonymous_user_id") || "anonymous";
+    const userId = authUser?._id || "anonymous";
     try {
       const response = await fetch("http://127.0.0.1:5001/recommend-fertilizer", {
         method: "POST",

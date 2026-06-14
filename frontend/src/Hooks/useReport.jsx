@@ -4,11 +4,11 @@ import toast from "react-hot-toast";
 
 const useReport = () => {
   const [loading, setLoading] = useState(false);
-  const { setAuthUser } = useAuthContext();
+  const { authUser } = useAuthContext();
 
   const generateReport = async (severity, diseaseName, setReport, imageBase64 = null) => {
     setLoading(true);
-    const userId = localStorage.getItem("rr_anonymous_user_id") || "anonymous";
+    const userId = authUser?._id || "anonymous";
     try {
       const response = await fetch("http://127.0.0.1:5001/generate-report", {
         method: "POST",

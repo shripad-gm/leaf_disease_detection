@@ -10,7 +10,7 @@ const useSignup = () => {
         if (!sucess) return false
         setLoading(true);
         try {
-            const res = await fetch("api/auth/signup", {
+            const res = await fetch("/api/auth/signup", {
                 method: "POST",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify({ fullname, username, password, confirmpassword, gender })
@@ -20,7 +20,7 @@ const useSignup = () => {
             if (data.error) {
                 throw new Error(data.error);
             }
-            localStorage.setItem("chat-user",JSON.stringify(data))
+            localStorage.setItem("resilient-roots-user",JSON.stringify(data))
 
             setAuthUser(data)
         } catch (error) {

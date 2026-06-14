@@ -2,7 +2,7 @@ import User from "../models/user.model.js";
 import bcrypt from "bcryptjs"
 import generateTokenAndSetCookie from "../utils/jwttoken.js";
 
-export const singup=async(req,res)=>{
+export const signup=async(req,res)=>{
     try{
         const {fullname,username,password,confirmpassword,gender}=req.body;
 

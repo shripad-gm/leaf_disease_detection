@@ -11,6 +11,7 @@ import Report from "./pages/report_generation/Report"
 import DiseaseRecognition from './pages/detect/DiseaseRecognition'
 import Fertilize from './pages/Fertilizer/fertilizer'
 import History from './pages/History/history'
+import Profile from './pages/profile/Profile'
 
 function App() {
   const { authUser } = useAuthContext();
@@ -23,12 +24,13 @@ function App() {
           <Route path="/signup" element={authUser ? <Navigate to="/" /> : <SignUp />} />
 
           {/* Feature Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/report" element={<Report />} />
-          <Route path='/detect' element={<DiseaseRecognition />} />
-          <Route path='/weather' element={<Weather />} />
-          <Route path='/fertilizer' element={<Fertilize />} />
-          <Route path='/history' element={<History />} />
+          <Route path="/" element={authUser ? <Home /> : <Navigate to="/login" />} />
+          <Route path="/report" element={authUser ? <Report /> : <Navigate to="/login" />} />
+          <Route path='/detect' element={authUser ? <DiseaseRecognition /> : <Navigate to="/login" />} />
+          <Route path='/weather' element={authUser ? <Weather /> : <Navigate to="/login" />} />
+          <Route path='/fertilizer' element={authUser ? <Fertilize /> : <Navigate to="/login" />} />
+          <Route path='/history' element={authUser ? <History /> : <Navigate to="/login" />} />
+          <Route path='/profile' element={authUser ? <Profile /> : <Navigate to="/login" />} />
         </Routes>
         <Toaster />
       </div>

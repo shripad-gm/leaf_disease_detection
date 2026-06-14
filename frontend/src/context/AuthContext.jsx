@@ -11,7 +11,7 @@ export const useAuthContext=()=>{
 export const AuthContextProvider=({children})=>{
 
     const [authUser, setAuthUser] = useState(() => {
-        const storedUser = localStorage.getItem("chat-user");
+        const storedUser = localStorage.getItem("resilient-roots-user");
         return storedUser ? JSON.parse(storedUser) : null;
     });
     

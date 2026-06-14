@@ -3,7 +3,9 @@ import mongoose from "mongoose";
 const connectToMongo=async()=>{
 
     try{
-        await mongoose.connect(process.env.mongo_db_url);
+        await mongoose.connect(process.env.mongo_db_url, {
+            dbName: 'leaf_disease_db'
+        });
         console.log("sucessfully connected to db")
     }
     catch(error){

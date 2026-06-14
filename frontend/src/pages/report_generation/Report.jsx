@@ -3,8 +3,10 @@ import { Link, useLocation } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import { FaFileAlt, FaArrowLeft, FaFileDownload, FaMagic, FaShieldAlt, FaLeaf } from "react-icons/fa";
 import useReport from "../../Hooks/useReport";
+import { useAuthContext } from "../../context/AuthContext";
 
 const ReportGenerator = () => {
+  const { authUser } = useAuthContext();
   const location = useLocation();
   const [diseaseName] = useState(location.state?.diseaseName || "");
   const [imageBase64] = useState(location.state?.imageBase64 || null);
@@ -271,6 +273,12 @@ const ReportGenerator = () => {
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></div>
             <span className="uppercase tracking-[0.2em] text-[8px] font-black text-emerald-400">Live Engine</span>
           </div>
+          {authUser && (
+            <Link to="/profile" className="flex items-center gap-2 hover:opacity-85 transition-opacity">
+              <img src={authUser.profilepic} alt="Profile" className="w-8 h-8 rounded-full border border-emerald-500/30" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 hidden md:inline">{authUser.username}</span>
+            </Link>
+          )}
         </div>
       </nav>
 

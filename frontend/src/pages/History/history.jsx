@@ -6,23 +6,15 @@ import {
   FaEye, FaFileDownload, FaShieldAlt, FaTrashAlt, FaSeedling 
 } from 'react-icons/fa';
 import toast from 'react-hot-toast';
+import { useAuthContext } from '../../context/AuthContext';
 
 const HistoryPage = () => {
+  const { authUser } = useAuthContext();
   const [historyList, setHistoryList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  // Retrieve or initialize anonymous user ID
-  const getUserId = () => {
-    let userId = localStorage.getItem("rr_anonymous_user_id");
-    if (!userId) {
-      userId = `rr-user-${Math.random().toString(36).substring(2, 15)}-${Date.now().toString(36)}`;
-      localStorage.setItem("rr_anonymous_user_id", userId);
-    }
-    return userId;
-  };
-
-  const userId = getUserId();
+  const userId = authUser?._id;
 
   const fetchHistory = async () => {
     setLoading(true);
@@ -406,11 +398,19 @@ const HistoryPage = () => {
           </div>
           <span className="uppercase tracking-[0.4em] text-[9px] font-black text-slate-400 group-hover:text-white transition-colors">Return</span>
         </Link>
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-black">
-            <FaHistory className="text-xs" />
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-black">
+              <FaHistory className="text-xs" />
+            </div>
+            <span className="uppercase tracking-[0.3em] text-[9px] font-black mr-2">History Log</span>
           </div>
-          <span className="uppercase tracking-[0.3em] text-[9px] font-black">History Log</span>
+          {authUser && (
+            <Link to="/profile" className="flex items-center gap-2 hover:opacity-85 transition-opacity">
+              <img src={authUser.profilepic} alt="Profile" className="w-8 h-8 rounded-full border border-emerald-500/30" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 hidden md:inline">{authUser.username}</span>
+            </Link>
+          )}
         </div>
       </nav>
 
