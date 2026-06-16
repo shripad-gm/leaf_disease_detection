@@ -4,6 +4,7 @@ import { jsPDF } from 'jspdf';
 import { FaLeaf, FaArrowLeft, FaFlask, FaVial, FaWater, FaThermometerHalf, FaSun, FaArrowRight, FaFileDownload, FaShieldAlt } from 'react-icons/fa';
 import useFertilizer from '../../Hooks/useFertilizer';
 import { useAuthContext } from '../../context/AuthContext';
+import Navbar from '../../components/Navbar';
 
 const FertilizationForm = () => {
   const { authUser } = useAuthContext();
@@ -290,28 +291,7 @@ const FertilizationForm = () => {
 
 
       {/* Navigation */}
-      <nav className="relative z-50 px-8 py-4 flex justify-between items-center border-b border-white/5 bg-slate-950/20 backdrop-blur-sm">
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl glass flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-black transition-all">
-            <FaArrowLeft className="text-xs" />
-          </div>
-          <span className="uppercase tracking-[0.4em] text-[9px] font-black">Return Home</span>
-        </Link>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-black">
-              <FaFlask className="text-xs" />
-            </div>
-            <span className="uppercase tracking-[0.3em] text-[9px] font-black mr-2">Nutrient Lab</span>
-          </div>
-          {authUser && (
-            <Link to="/profile" className="flex items-center gap-2 hover:opacity-85 transition-opacity">
-              <img src={authUser.profilepic} alt="Profile" className="w-8 h-8 rounded-full border border-emerald-500/30" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 hidden md:inline">{authUser.username}</span>
-            </Link>
-          )}
-        </div>
-      </nav>
+      <Navbar />
 
       <main className="relative z-10 max-w-5xl mx-auto px-6 py-4 flex-grow flex flex-col justify-center w-full">
         <div className="text-center mb-6 space-y-1">

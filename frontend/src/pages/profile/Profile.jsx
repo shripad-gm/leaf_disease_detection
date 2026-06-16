@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../context/AuthContext';
+import Navbar from '../../components/Navbar';
 import useLogout from '../../Hooks/useLogout';
 import { FaUser, FaEnvelope, FaCalendarAlt, FaSignOutAlt, FaHome, FaHistory, FaLeaf, FaFlask } from 'react-icons/fa';
 import toast from 'react-hot-toast';
@@ -60,20 +61,7 @@ const Profile = () => {
       </div>
 
       {/* Navigation */}
-      <nav className="relative z-50 px-8 py-4 flex justify-between items-center border-b border-white/5 bg-slate-950/20 backdrop-blur-sm">
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl glass flex items-center justify-center text-emerald-400 group-hover:bg-emerald-400 group-hover:text-black transition-all shadow-[0_0_20px_rgba(52,211,153,0.2)]">
-            <FaHome className="text-xs" />
-          </div>
-          <span className="uppercase tracking-[0.4em] text-[9px] font-black text-slate-400 group-hover:text-white transition-colors">Return Home</span>
-        </Link>
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-black">
-            <FaUser className="text-xs" />
-          </div>
-          <span className="uppercase tracking-[0.3em] text-[9px] font-black">User Profile</span>
-        </div>
-      </nav>
+      <Navbar />
 
       <main className="relative z-10 max-w-4xl mx-auto px-6 py-12 flex-grow w-full flex flex-col justify-center">
         

@@ -4,6 +4,7 @@ import { jsPDF } from "jspdf";
 import { FaFileAlt, FaArrowLeft, FaFileDownload, FaMagic, FaShieldAlt, FaLeaf } from "react-icons/fa";
 import useReport from "../../Hooks/useReport";
 import { useAuthContext } from "../../context/AuthContext";
+import Navbar from "../../components/Navbar";
 
 const ReportGenerator = () => {
   const { authUser } = useAuthContext();
@@ -261,26 +262,7 @@ const ReportGenerator = () => {
       </div>
 
       {/* Navigation */}
-      <nav className="relative z-50 px-8 py-4 flex justify-between items-center border-b border-white/5 bg-slate-950/20 backdrop-blur-sm">
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl glass flex items-center justify-center text-emerald-400 group-hover:bg-emerald-400 group-hover:text-black transition-all shadow-[0_0_20px_rgba(52,211,153,0.2)]">
-            <FaArrowLeft className="text-xs" />
-          </div>
-          <span className="uppercase tracking-[0.4em] text-[9px] font-black text-slate-400 group-hover:text-white transition-colors">Return</span>
-        </Link>
-        <div className="flex items-center gap-4">
-          <div className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></div>
-            <span className="uppercase tracking-[0.2em] text-[8px] font-black text-emerald-400">Live Engine</span>
-          </div>
-          {authUser && (
-            <Link to="/profile" className="flex items-center gap-2 hover:opacity-85 transition-opacity">
-              <img src={authUser.profilepic} alt="Profile" className="w-8 h-8 rounded-full border border-emerald-500/30" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 hidden md:inline">{authUser.username}</span>
-            </Link>
-          )}
-        </div>
-      </nav>
+      <Navbar />
 
       <main className="relative z-10 max-w-5xl mx-auto px-6 py-4 flex-grow flex flex-col justify-center w-full">
         

@@ -5,6 +5,8 @@ import { FaLeaf, FaFlask, FaCloudSun, FaArrowRight, FaChartLine, FaSeedling, FaW
 import { useAuthContext } from "../../context/AuthContext";
 import useLogout from "../../Hooks/useLogout";
 
+import Navbar from "../../components/Navbar";
+
 // Import original assets
 import homeBg from "./HomeBG1.jpeg";
 import featuresBg from "./pic1.jpeg";
@@ -23,29 +25,8 @@ const Home = () => {
         <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
-      {/* Modern Navbar (Matching Original Brand) */}
-      <nav className="relative z-50 px-10 py-6 flex justify-between items-center border-b border-white/5 bg-slate-950/50 backdrop-blur-md">
-        <Link to="/" className="text-2xl font-black tracking-tighter flex items-center gap-3">
-          <FaLeaf className="text-emerald-500" />
-          <span className="uppercase tracking-[0.2em] text-sm text-white">Resilient Roots AI</span>
-        </Link>
-        {authUser ? (
-          <div className="flex items-center gap-6">
-            <Link to="/profile" className="flex items-center gap-2 group/nav-profile">
-              <img src={authUser.profilepic} alt="Profile" className="w-8 h-8 rounded-full border border-emerald-500/30 group-hover/nav-profile:border-emerald-500 transition-colors" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 group-hover/nav-profile:text-white transition-colors hidden md:inline">{authUser.username}</span>
-            </Link>
-            <button onClick={logout} className="btn-secondary !rounded-full !px-5 !py-2 text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
-              <FaSignOutAlt className="text-xs" /> Sign Out
-            </button>
-          </div>
-        ) : (
-          <div className="flex gap-4">
-            <Link to="/login" className="btn-secondary !rounded-full !px-5 !py-2 text-[10px] font-black uppercase tracking-widest">Login</Link>
-            <Link to="/signup" className="btn-primary !rounded-full !px-5 !py-2 text-[10px] font-black uppercase tracking-widest">Sign Up</Link>
-          </div>
-        )}
-      </nav>
+      {/* Modern Navbar */}
+      <Navbar />
 
       {/* Banner Section (Modified for Visual Impact) */}
       <section className="relative h-[90vh] flex items-center justify-center text-center px-6 overflow-hidden">
