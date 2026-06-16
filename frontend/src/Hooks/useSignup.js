@@ -20,11 +20,11 @@ const useSignup = () => {
             if (data.error) {
                 throw new Error(data.error);
             }
-            localStorage.setItem("resilient-roots-user",JSON.stringify(data))
-
-            setAuthUser(data)
+            toast.success("Signup successful! Please login.");
+            return true;
         } catch (error) {
             toast.error(error.message) 
+            return false;
         } finally {
             setLoading(false)
         }

@@ -88,7 +88,7 @@ const Profile = () => {
             <div className="flex flex-col items-center gap-4">
               <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-emerald-500/30 p-1 bg-slate-900 shadow-[0_0_50px_rgba(52,211,153,0.15)] group-hover:border-emerald-400 transition-all duration-500">
                 <img 
-                  src={authUser.profilepic || `https://avatar.iran.liara.run/public/boy?username=${authUser.username}`} 
+                  src={authUser.profilepic || ((authUser.gender === 'female' || (authUser.profilepic && authUser.profilepic.includes('girl'))) ? '/default_girl.png' : '/default_boy.png')} 
                   alt={authUser.fullname} 
                   className="w-full h-full rounded-full object-cover"
                 />
@@ -107,17 +107,11 @@ const Profile = () => {
                 <h2 className="text-3xl font-black uppercase tracking-tight text-white">{authUser.fullname}</h2>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-white/5">
+              <div className="pb-6 border-b border-white/5">
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1">Username</p>
                   <p className="text-sm font-bold text-slate-300 flex items-center gap-2">
                     <span className="text-emerald-500">@</span>{authUser.username}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1">System Account Type</p>
-                  <p className="text-sm font-bold text-slate-300 flex items-center gap-2">
-                    <FaLeaf className="text-emerald-500 text-xs" /> Certified Farmer
                   </p>
                 </div>
               </div>

@@ -20,7 +20,7 @@ const Login = () => {
       {/* Background Image */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <img
-          src="/features_bg.png"
+          src="/login_signup_bg.png"
           alt="Login Background"
           style={{
             position: 'absolute',
@@ -32,13 +32,13 @@ const Login = () => {
             transform: 'scale(1.15)',
             transformOrigin: 'top left'
           }}
-          className="opacity-25 contrast-110 saturate-100"
+          className="opacity-70 contrast-110 saturate-100"
         />
-        <div className="absolute inset-0 bg-slate-950/70"></div>
+        <div className="absolute inset-0 bg-slate-950/40"></div>
       </div>
 
-      <div className='relative z-10 flex flex-col items-center justify-center min-w-[380px] mx-auto'>
-        <div className='w-full p-8 rounded-[2rem] border border-white/10 bg-slate-900/40 backdrop-blur-xl shadow-2xl'>
+      <div className='relative z-10 flex flex-col items-center justify-center min-w-[400px] mx-auto'>
+        <div className='w-full p-10 rounded-[2.5rem] border border-emerald-500/20 bg-slate-950/85 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5),_0_0_40px_rgba(16,185,129,0.15)]'>
           <h1 className='text-3xl font-black text-center text-white uppercase tracking-tight mb-6'>
             Login <span className='gradient-text italic font-serif block text-lg mt-1 tracking-normal normal-case'>Resilient Roots</span>
           </h1>
