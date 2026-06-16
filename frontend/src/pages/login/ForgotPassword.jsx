@@ -27,7 +27,7 @@ const ForgotPassword = () => {
 			if (data.error) {
 				throw new Error(data.error);
 			}
-			toast.success("Reset code generated! Please check server console logs.");
+			toast.success(data.message || "Reset code sent! Please check your email inbox.");
 			setStep(2);
 		} catch (error) {
 			toast.error(error.message);

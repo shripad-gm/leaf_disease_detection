@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs"
 import generateTokenAndSetCookie from "../utils/jwttoken.js";
+import sendEmail from "../utils/sendEmail.js";
 
 export const signup=async(req,res)=>{
     try{
@@ -121,13 +122,14 @@ export const forgotPassword = async (req, res) => {
         user.resetOTPExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
         await user.save();
 
-        // Simulate sending email by printing code to backend console
-        console.log("\n==========================================");
-        console.log(`[OTP SIMULATOR] Password reset requested for: ${email}`);
-        console.log(`[OTP SIMULATOR] Your 6-digit verification code is: ${otp}`);
-        console.log("==========================================\n");
+        // Send verification code email
+        await sendEmail({
+            to: email.toLowerCase(),
+            subject: "Resilient Roots - Password Reset Verification Code",
+            code: otp
+        });
 
-        res.status(200).json({ message: "Reset code generated. Please check server console logs." });
+        res.status(200).json({ message: "Reset code sent! Please check your email inbox." });
     } catch (error) {
         console.log("Error in forgotPassword controller:", error.message);
         res.status(500).json({ error: "Internal server error" });
