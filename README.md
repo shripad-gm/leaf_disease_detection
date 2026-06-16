@@ -6,7 +6,7 @@ Featuring a **dark-emerald glassmorphic theme**, this platform provides leaf cla
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 The project consists of three core components:
 1. **Frontend (React/Vite)**: A responsive single-page dashboard featuring modern HSL tailored colors, interactive micro-animations, and glassmorphic panels.
@@ -15,7 +15,7 @@ The project consists of three core components:
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 - **Disease Recognition**: Upload images of leaves to detect crop-specific pathogens using deep learning.
 - **AI Report Generator**: Instantly drafts treatment protocols, severity analyses, and recovery steps.
@@ -26,7 +26,7 @@ The project consists of three core components:
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Client**: React (v18), Vite, TailwindCSS, DaisyUI, React Router, React Hot Toast
 - **Database**: MongoDB Atlas / Mongoose
@@ -35,7 +35,7 @@ The project consists of three core components:
 
 ---
 
-## 🚀 Local Development Setup
+## Local Development Setup
 
 ### 1. Prerequisites
 Ensure you have the following installed:
@@ -101,8 +101,3 @@ npm run dev
 
 ---
 
-## ☁️ Production Deployment (Free)
-
-The repository is pre-configured to be deployed for free:
-1. **Flask ML API**: Deploy the `/detect_and_generate` folder on a free **Hugging Face Space** using the provided `Dockerfile`. This gives you 16GB of RAM for the TensorFlow model for free.
-2. **React + Node Web App**: Deploy the repository on **Render** as a Web Service. The Node server will build the React bundle and host it statically out-of-the-box. Add the environment variables from your `.env`, and set `VITE_FLASK_API_URL` to point to your Hugging Face Space URL.

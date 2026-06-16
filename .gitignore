@@ -24,6 +24,7 @@ dist-ssr
 *.sln
 *.sw?
 
-# Add this to .gitignore:
+# Python environment and testing files
 detect_and_generate/venv/
 detect_and_generate/__pycache__/
+detect_and_generate/uploads/
