@@ -9,9 +9,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # Set the working directory inside the container
 WORKDIR /app
 
-# Install system dependencies required by OpenCV and other ML packages
+# Install system dependencies required by image processing and ML packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libgl1-mesa-glx \
+    libgl1 \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
