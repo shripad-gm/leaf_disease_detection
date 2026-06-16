@@ -364,13 +364,11 @@ const HistoryPage = () => {
   return (
     <div className="min-h-screen flex flex-col justify-between bg-slate-950 text-slate-100 overflow-y-auto selection:bg-emerald-500/30 font-sans">
       
-      {/* Dynamic Video Background */}
+      {/* Dynamic Image Background */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
+        <img
+          src="/history_bg.png"
+          alt="History Background"
           style={{
             position: 'absolute',
             top: 0,
@@ -378,14 +376,12 @@ const HistoryPage = () => {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            transform: 'scale(1.5)',
+            transform: 'scale(1.15)',
             transformOrigin: 'top left'
           }}
           className="opacity-40 contrast-110 saturate-100"
-        >
-          <source src="/bg_video.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-slate-950/50"></div>
+        />
+        <div className="absolute inset-0 bg-slate-950/60"></div>
         <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-emerald-600/5 rounded-full blur-[150px]"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[150px]"></div>
       </div>
