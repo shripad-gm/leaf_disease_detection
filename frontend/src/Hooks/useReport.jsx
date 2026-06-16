@@ -18,7 +18,7 @@ const useReport = () => {
           severity,
           disease_name: diseaseName,
           userId,
-          imageBase64,   // sent to Flask → stored in MongoDB
+          imageBase64,
         }),
       });
 
@@ -31,6 +31,22 @@ const useReport = () => {
       if (data.error) throw new Error(data.error);
 
       setReport(data.report);
+
+      // Save history directly through Node.js backend
+      try {
+        await fetch("/api/history", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId,
+            type: "disease",
+            metadata: { diseaseName, severity, imageBase64 },
+            report: data.report
+          })
+        });
+      } catch (err) {
+        console.error("Failed to save history to database:", err);
+      }
     } catch (error) {
       console.error("Error generating report:", error);
       toast.error(`Failed to generate report: ${error.message}`);

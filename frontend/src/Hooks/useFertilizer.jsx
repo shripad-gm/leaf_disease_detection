@@ -26,6 +26,22 @@ const useFertilizer = () => {
       if (data.error) throw new Error(data.error);
 
       setRecommendation(data.recommendation);
+
+      // Save history directly through Node.js backend
+      try {
+        await fetch("/api/history", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId,
+            type: "fertilizer",
+            metadata: params,
+            report: data.recommendation
+          })
+        });
+      } catch (err) {
+        console.error("Failed to save history to database:", err);
+      }
     } catch (error) {
       console.error("Error getting fertilizer recommendation:", error);
       toast.error(`Failed to get recommendation: ${error.message}`);
