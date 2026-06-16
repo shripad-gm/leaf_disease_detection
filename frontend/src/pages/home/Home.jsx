@@ -70,8 +70,8 @@ const Home = () => {
       {/* Features Section (Preserving Original Content) */}
       <section id="feature" className="relative z-10 py-32 px-6 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src="/features_bg.png" alt="Features Background" className="w-full h-full object-cover opacity-30 contrast-110 saturate-100 scale-105" />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/40 to-slate-950"></div>
+          <img src="/features_bg.png" alt="Features Background" className="w-full h-full object-cover opacity-65 contrast-110 saturate-100 scale-105" />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/20 to-slate-950"></div>
         </div>
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20 space-y-4">
@@ -101,8 +101,8 @@ const Home = () => {
       {authUser && (
         <section id="homepg" className="relative z-10 py-32 px-6 overflow-hidden">
           <div className="absolute inset-0 z-0">
-            <img src={servicesBg} alt="Services Background" className="w-full h-full object-cover opacity-20 contrast-125 saturate-50 scale-105" />
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950"></div>
+            <img src={servicesBg} alt="Services Background" className="w-full h-full object-cover opacity-55 contrast-125 saturate-100 scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-transparent to-slate-950/80"></div>
           </div>
           <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-20 space-y-4">
