@@ -40,7 +40,7 @@ const Login = () => {
       <div className='relative z-10 flex flex-col items-center justify-center min-w-[400px] mx-auto'>
         <div className='w-full p-10 rounded-[2.5rem] border border-emerald-500/20 bg-slate-950/85 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5),_0_0_40px_rgba(16,185,129,0.15)]'>
           <h1 className='text-3xl font-black text-center text-white uppercase tracking-tight mb-6'>
-            Login <span className='gradient-text italic font-serif block text-lg mt-1 tracking-normal normal-case'>Resilient Roots</span>
+            Login <span className='gradient-text italic font-serif block text-lg mt-1 tracking-normal normal-case pr-2'>Resilient Roots</span>
           </h1>
 
           <form onSubmit={handleSubmit} className="space-y-4">

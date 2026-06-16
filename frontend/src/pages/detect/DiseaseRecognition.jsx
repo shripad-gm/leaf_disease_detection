@@ -105,7 +105,7 @@ const DiseaseRecognition = () => {
         {/* Title Section */}
         <div className="text-center mb-6 space-y-1">
           <p className="text-emerald-500 font-black tracking-[0.5em] text-[9px] uppercase">Diagnostic Engine</p>
-          <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase">Crop Disease <span className="gradient-text italic">Prediction</span></h1>
+          <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase">Crop Disease <span className="gradient-text italic pr-2">Prediction</span></h1>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6 items-stretch flex-grow mb-6">

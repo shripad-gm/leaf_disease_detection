@@ -270,7 +270,7 @@ const ReportGenerator = () => {
         <div className="text-center mb-6 space-y-1">
            <p className="text-emerald-400 font-black tracking-[0.5em] text-[9px] uppercase italic">Precision Intelligence</p>
            <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase leading-none">
-             Remediation <span className="gradient-text italic">Protocol</span>
+             Remediation <span className="gradient-text italic pr-2">Protocol</span>
            </h1>
         </div>
 

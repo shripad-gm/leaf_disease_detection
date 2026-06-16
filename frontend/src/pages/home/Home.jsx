@@ -51,7 +51,7 @@ const Home = () => {
         
         <div className="relative z-10 max-w-4xl mb-4">
           <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4 uppercase leading-[0.9]">
-            Resilient <br /> <span className="gradient-text italic font-serif">Roots AI</span>
+            Resilient <br /> <span className="gradient-text italic font-serif pr-2">Roots AI</span>
           </h1>
           <p className="text-lg text-slate-400 mb-8 italic font-light tracking-wide">
             Empowering Farmers with Disease Recognition Technology

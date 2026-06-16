@@ -395,7 +395,7 @@ const HistoryPage = () => {
         <div className="text-center mb-8 space-y-1">
           <p className="text-emerald-400 font-black tracking-[0.5em] text-[9px] uppercase italic">MongoDB Repository</p>
           <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase leading-none">
-            Agricultural <span className="gradient-text italic">History</span>
+            Agricultural <span className="gradient-text italic pr-2">History</span>
           </h1>
         </div>
 

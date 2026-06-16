@@ -296,7 +296,7 @@ const FertilizationForm = () => {
       <main className="relative z-10 max-w-5xl mx-auto px-6 py-4 flex-grow flex flex-col justify-center w-full">
         <div className="text-center mb-6 space-y-1">
           <p className="text-emerald-500 font-black tracking-[0.5em] text-[10px] uppercase">Soil Synthesis</p>
-          <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase leading-none">Fertilizer <span className="gradient-text italic">Recommendation</span></h1>
+          <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase leading-none">Fertilizer <span className="gradient-text italic pr-2">Recommendation</span></h1>
         </div>
 
         <div className="glass-card !rounded-[2rem] !p-8 border-white/5 shadow-2xl flex flex-col justify-between">

@@ -94,7 +94,7 @@ function App() {
         {/* Search Header */}
         <div className="text-center mb-4 space-y-1">
            <p className="text-emerald-500 font-black tracking-[0.5em] text-[9px] uppercase italic">Atmospheric Sync</p>
-           <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase leading-none">Weather <span className="gradient-text italic">Prediction</span></h1>
+           <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase leading-none">Weather <span className="gradient-text italic pr-2">Prediction</span></h1>
            
            <div className="max-w-md mx-auto flex items-center gap-2 p-1 bg-white/[0.03] border border-white/10 rounded-full backdrop-blur-xl focus-within:border-emerald-500/50 transition-all mt-2">
               <input
