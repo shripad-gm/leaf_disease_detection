@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../context/AuthContext';
 import Navbar from '../../components/Navbar';
 import useLogout from '../../Hooks/useLogout';
-import { FaUser, FaEnvelope, FaCalendarAlt, FaSignOutAlt, FaHome, FaHistory, FaLeaf, FaFlask } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaCalendarAlt, FaSignOutAlt, FaHome, FaHistory, FaLeaf, FaFlask, FaArrowLeft } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 
 const Profile = () => {
@@ -65,6 +65,16 @@ const Profile = () => {
 
       <main className="relative z-10 max-w-4xl mx-auto px-6 py-12 flex-grow w-full flex flex-col justify-center">
         
+        {/* Back Button */}
+        <div className="mb-6 flex justify-start">
+          <button 
+            onClick={() => navigate('/')}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-emerald-500/30 text-xs font-black uppercase tracking-widest text-slate-300 hover:text-emerald-400 transition-all hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <FaArrowLeft className="text-xs" /> Back to Dashboard
+          </button>
+        </div>
+
         {/* Glassmorphic Profile Card */}
         <div className="glass-card !rounded-[2.5rem] !p-10 border-white/10 shadow-2xl relative overflow-hidden group">
           
@@ -100,6 +110,15 @@ const Profile = () => {
                   <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1">Username</p>
                   <p className="text-sm font-bold text-slate-300 flex items-center gap-2">
                     <span className="text-emerald-500">@</span>{authUser.username}
+                  </p>
+                </div>
+              </div>
+
+              <div className="pb-6 border-b border-white/5">
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1">Email Address</p>
+                  <p className="text-sm font-bold text-slate-300 flex items-center gap-2">
+                    <FaEnvelope className="text-emerald-500 text-xs" /> {authUser.email || "Not Provided"}
                   </p>
                 </div>
               </div>

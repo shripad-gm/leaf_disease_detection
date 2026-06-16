@@ -9,6 +9,7 @@ const SignUp = () => {
 	const [inputs,setInputs]=useState({
 		fullname:'',
 		username:'',
+		email:'',
 		password:'',
 		confirmpassword:'',
 		gender:''
@@ -32,7 +33,7 @@ const SignUp = () => {
       {/* Background Image */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <img
-          src="/login_signup_bg.png"
+          src="/signup_bg.png"
           alt="SignUp Background"
           style={{
             position: 'absolute',
@@ -44,13 +45,16 @@ const SignUp = () => {
             transform: 'scale(1.15)',
             transformOrigin: 'top left'
           }}
-          className="opacity-70 contrast-110 saturate-100"
+          className="opacity-45 contrast-105 saturate-90"
         />
-        <div className="absolute inset-0 bg-slate-950/40"></div>
+        <div className="absolute inset-0 bg-slate-950/60"></div>
       </div>
 
-      <div className='relative z-10 flex flex-col items-center justify-center min-w-[420px] mx-auto'>
-        <div className='w-full p-10 rounded-[2.5rem] border border-emerald-500/20 bg-slate-950/85 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5),_0_0_40px_rgba(16,185,129,0.15)]'>
+      <div className='relative z-10 flex flex-col items-center justify-center min-w-[420px] mx-auto group'>
+        {/* Glow effect */}
+        <div className="absolute inset-0 -z-10 bg-emerald-500/30 rounded-[2.5rem] blur-3xl opacity-100 group-hover:bg-emerald-400/40 transition-all duration-700"></div>
+
+        <div className='w-full p-10 rounded-[2.5rem] border border-emerald-500/40 bg-slate-950/95 backdrop-blur-3xl shadow-[0_25px_60px_rgba(0,0,0,0.8),_0_0_60px_rgba(16,185,129,0.35)]'>
           <h1 className='text-3xl font-black text-center text-white uppercase tracking-tight mb-4'>
             Sign Up <span className='gradient-text italic font-serif block text-lg mt-1 tracking-normal normal-case pr-2'>Resilient Roots</span>
           </h1>
@@ -79,6 +83,19 @@ const SignUp = () => {
                 className='w-full bg-white/[0.03] border border-white/10 rounded-xl p-2.5 outline-none focus:border-emerald-500/50 transition-colors text-white text-sm'
                 value={inputs.username}
                 onChange={(e)=>setInputs({...inputs,username:e.target.value})}
+              />
+            </div>
+
+            <div className="space-y-1">
+              <label className='block text-[10px] font-black uppercase tracking-widest text-slate-400'>
+                Email
+              </label>
+              <input
+                type='email'
+                placeholder='johndoe@example.com'
+                className='w-full bg-white/[0.03] border border-white/10 rounded-xl p-2.5 outline-none focus:border-emerald-500/50 transition-colors text-white text-sm'
+                value={inputs.email}
+                onChange={(e)=>setInputs({...inputs,email:e.target.value})}
               />
             </div>
 

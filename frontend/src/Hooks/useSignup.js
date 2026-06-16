@@ -5,15 +5,15 @@ import { useAuthContext } from "../context/AuthContext"
 const useSignup = () => {
     const [loading, setLoading] = useState(false)
     const {setAuthUser}=useAuthContext();
-    const signup = async ({ fullname, username, password, confirmpassword, gender }) => {
-        const sucess = handleInputError({ fullname, username, password, confirmpassword, gender })
+    const signup = async ({ fullname, username, email, password, confirmpassword, gender }) => {
+        const sucess = handleInputError({ fullname, username, email, password, confirmpassword, gender })
         if (!sucess) return false
         setLoading(true);
         try {
             const res = await fetch("/api/auth/signup", {
                 method: "POST",
                 headers: { "content-type": "application/json" },
-                body: JSON.stringify({ fullname, username, password, confirmpassword, gender })
+                body: JSON.stringify({ fullname, username, email, password, confirmpassword, gender })
             })
             const data = await res.json();
             console.log(data)
@@ -35,10 +35,15 @@ const useSignup = () => {
 
 export default useSignup
 
-function handleInputError({ fullname, username, password, confirmpassword, gender }) {
-    if (!fullname || !username || !password || !confirmpassword || !gender) {
+function handleInputError({ fullname, username, email, password, confirmpassword, gender }) {
+    if (!fullname || !username || !email || !password || !confirmpassword || !gender) {
         toast.error("input all fields")
         return false
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        toast.error("Please enter a valid email address");
+        return false;
     }
     if (password !== confirmpassword) {
         toast.error("passwords do not match")

@@ -20,7 +20,7 @@ const Login = () => {
       {/* Background Image */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <img
-          src="/login_signup_bg.png"
+          src="/login_bg.png"
           alt="Login Background"
           style={{
             position: 'absolute',
@@ -32,13 +32,16 @@ const Login = () => {
             transform: 'scale(1.15)',
             transformOrigin: 'top left'
           }}
-          className="opacity-70 contrast-110 saturate-100"
+          className="opacity-45 contrast-105 saturate-90"
         />
-        <div className="absolute inset-0 bg-slate-950/40"></div>
+        <div className="absolute inset-0 bg-slate-950/60"></div>
       </div>
 
-      <div className='relative z-10 flex flex-col items-center justify-center min-w-[400px] mx-auto'>
-        <div className='w-full p-10 rounded-[2.5rem] border border-emerald-500/20 bg-slate-950/85 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5),_0_0_40px_rgba(16,185,129,0.15)]'>
+      <div className='relative z-10 flex flex-col items-center justify-center min-w-[400px] mx-auto group'>
+        {/* Glow effect */}
+        <div className="absolute inset-0 -z-10 bg-emerald-500/30 rounded-[2.5rem] blur-3xl opacity-100 group-hover:bg-emerald-400/40 transition-all duration-700"></div>
+
+        <div className='w-full p-10 rounded-[2.5rem] border border-emerald-500/40 bg-slate-950/95 backdrop-blur-3xl shadow-[0_25px_60px_rgba(0,0,0,0.8),_0_0_60px_rgba(16,185,129,0.35)]'>
           <h1 className='text-3xl font-black text-center text-white uppercase tracking-tight mb-6'>
             Login <span className='gradient-text italic font-serif block text-lg mt-1 tracking-normal normal-case pr-2'>Resilient Roots</span>
           </h1>
@@ -73,6 +76,9 @@ const Login = () => {
             <div className="flex justify-between items-center pt-2">
               <Link to='/signup' className='text-xs text-emerald-400 hover:text-emerald-300 transition-colors font-bold uppercase tracking-wider'>
                 Create Account
+              </Link>
+              <Link to='/forgot-password' className='text-xs text-slate-400 hover:text-emerald-400 transition-colors font-bold uppercase tracking-wider'>
+                Forgot Password?
               </Link>
             </div>
 
