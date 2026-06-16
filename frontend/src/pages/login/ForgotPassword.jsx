@@ -68,7 +68,7 @@ const ForgotPassword = () => {
 	};
 
 	return (
-		<div className='p-4 h-screen flex items-center justify-center bg-slate-950 text-slate-100 overflow-hidden font-sans relative'>
+		<div className='p-4 min-h-screen py-12 flex items-center justify-center bg-slate-950 text-slate-100 overflow-y-auto font-sans relative'>
 			{/* Background Image */}
 			<div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
 				<img
@@ -89,11 +89,11 @@ const ForgotPassword = () => {
 				<div className="absolute inset-0 bg-slate-950/60"></div>
 			</div>
 
-			<div className='relative z-10 flex flex-col items-center justify-center min-w-[400px] mx-auto group'>
+			<div className='relative z-10 flex flex-col items-center justify-center w-full max-w-[400px] px-2 mx-auto group'>
 				{/* Glow effect */}
-				<div className="absolute inset-0 -z-10 bg-emerald-500/30 rounded-[2.5rem] blur-3xl opacity-100 group-hover:bg-emerald-400/40 transition-all duration-700"></div>
+				<div className="absolute inset-0 -z-10 bg-emerald-500/30 rounded-[2rem] sm:rounded-[2.5rem] blur-3xl opacity-100 group-hover:bg-emerald-400/40 transition-all duration-700"></div>
 
-				<div className='w-full p-10 rounded-[2.5rem] border border-emerald-500/40 bg-slate-950/95 backdrop-blur-3xl shadow-[0_25px_60px_rgba(0,0,0,0.8),_0_0_60px_rgba(16,185,129,0.35)]'>
+				<div className='w-full p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] border border-emerald-500/40 bg-slate-950/95 backdrop-blur-3xl shadow-[0_25px_60px_rgba(0,0,0,0.8),_0_0_60px_rgba(16,185,129,0.35)]'>
 					<h1 className='text-3xl font-black text-center text-white uppercase tracking-tight mb-2'>
 						Recovery <span className='gradient-text italic font-serif block text-lg mt-1 tracking-normal normal-case pr-2'>Resilient Roots</span>
 					</h1>
