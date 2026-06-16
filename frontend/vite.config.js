@@ -7,11 +7,6 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      // History routes → Flask (handles save + fetch + delete)
-      '/api/history': {
-        target: 'http://localhost:5001',
-        changeOrigin: true,
-      },
       // All other /api routes → Node.js (auth etc.)
       '/api': {
         target: 'http://localhost:5000',

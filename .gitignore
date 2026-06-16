@@ -28,3 +28,6 @@ dist-ssr
 detect_and_generate/venv/
 detect_and_generate/__pycache__/
 detect_and_generate/uploads/
+
+# Scratch files
+scratch/

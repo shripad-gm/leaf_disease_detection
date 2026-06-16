@@ -33,8 +33,10 @@ const HistoryPage = () => {
   };
 
   useEffect(() => {
-    fetchHistory();
-  }, []);
+    if (userId) {
+      fetchHistory();
+    }
+  }, [userId]);
 
   const handleDeleteItem = async (id, e) => {
     e.stopPropagation();

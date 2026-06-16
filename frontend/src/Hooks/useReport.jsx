@@ -34,7 +34,7 @@ const useReport = () => {
 
       // Save history directly through Node.js backend
       try {
-        await fetch("/api/history", {
+        const res = await fetch("/api/history", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -44,8 +44,13 @@ const useReport = () => {
             report: data.report
           })
         });
+        if (!res.ok) {
+          const resData = await res.json();
+          throw new Error(resData.error || `Failed to save history: ${res.statusText}`);
+        }
       } catch (err) {
         console.error("Failed to save history to database:", err);
+        toast.error(`History saving failed: ${err.message}`);
       }
     } catch (error) {
       console.error("Error generating report:", error);

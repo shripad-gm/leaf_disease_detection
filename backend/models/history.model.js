@@ -12,8 +12,7 @@ const historySchema = new mongoose.Schema({
         enum: ["disease", "fertilizer"]
     },
     metadata: {
-        type: Map,
-        of: mongoose.Schema.Types.Mixed,
+        type: mongoose.Schema.Types.Mixed,
         required: true
     },
     report: {
