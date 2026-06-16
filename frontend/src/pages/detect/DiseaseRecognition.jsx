@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { FaLeaf, FaArrowLeft, FaCloudUploadAlt, FaMicroscope, FaShieldAlt, FaChartLine, FaArrowRight } from 'react-icons/fa';
 import { useAuthContext } from '../../context/AuthContext';
 import Navbar from '../../components/Navbar';
+import { FLASK_API_URL } from "../../config";
 
 const DiseaseRecognition = () => {
   const { authUser } = useAuthContext();
@@ -35,7 +36,7 @@ const DiseaseRecognition = () => {
       formData.append("file", imageFile);
 
       try {
-        const response = await fetch("http://127.0.0.1:5001/detect", {
+        const response = await fetch(`${FLASK_API_URL}/detect`, {
           method: 'POST',
           body: formData,
         });

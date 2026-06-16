@@ -22,7 +22,18 @@ app.use(express.json());
 app.use("/api/auth",authRoutes)
 app.use("/api/history",historyRoutes)
 
+// Serve frontend static assets from the built distribution
+const frontendDistPath = path.join(__dirname, "..", "frontend", "dist");
+app.use(express.static(frontendDistPath));
 
+// Fallback all non-API routing to index.html for React Router compatibility
+app.get("*", (req, res) => {
+  if (!req.path.startsWith("/api")) {
+    res.sendFile(path.join(frontendDistPath, "index.html"));
+  } else {
+    res.status(404).json({ error: "API route not found" });
+  }
+});
 
 app.listen(PORT, () => {
   connectToMongo();

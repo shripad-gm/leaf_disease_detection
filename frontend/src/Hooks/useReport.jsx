@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
+import { FLASK_API_URL } from "../config";
 
 const useReport = () => {
   const [loading, setLoading] = useState(false);
@@ -10,7 +11,7 @@ const useReport = () => {
     setLoading(true);
     const userId = authUser?._id || "anonymous";
     try {
-      const response = await fetch("http://127.0.0.1:5001/generate-report", {
+      const response = await fetch(`${FLASK_API_URL}/generate-report`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
