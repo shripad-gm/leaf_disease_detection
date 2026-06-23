@@ -1,4 +1,6 @@
 # Resilient Roots AI 🌿
+## Deployed Link
+[Live Demo](https://resilient-roots.onrender.com/)
 
 Resilient Roots AI is a premium, high-tech digital agriculture platform designed to help farmers and agronomists identify plant diseases, generate AI-powered treatment recommendations, optimize fertilizer usage, and keep logs of agricultural activity.
 
@@ -100,6 +102,5 @@ npm run dev
 *Access the dashboard at `http://localhost:3000`.*
 
 ---
-## Deployed Link
-[Live Demo](https://resilient-roots.onrender.com/)
+
 
