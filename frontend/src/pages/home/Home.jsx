@@ -1,12 +1,21 @@
 import React from "react";
 import "tailwindcss/tailwind.css";
 import { Link } from "react-router-dom";
-import { FaLeaf, FaFlask, FaCloudSun, FaArrowRight, FaChartLine, FaSeedling, FaWallet } from "react-icons/fa";
+import { FaLeaf, FaFlask, FaCloudSun, FaArrowRight, FaChartLine, FaSeedling, FaWallet, FaHistory, FaSignOutAlt, FaUser } from "react-icons/fa";
+import { useAuthContext } from "../../context/AuthContext";
+import useLogout from "../../Hooks/useLogout";
+
+import Navbar from "../../components/Navbar";
 
 // Import original assets
 import homeBg from "./HomeBG1.jpeg";
+import featuresBg from "./pic1.jpeg";
+import servicesBg from "./pic3.jpg";
 
 const Home = () => {
+  const { authUser } = useAuthContext();
+  const { logout } = useLogout();
+
   return (
     <div className="min-h-screen bg-slate-950 text-white selection:bg-emerald-500/30 font-sans">
       
@@ -16,30 +25,39 @@ const Home = () => {
         <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
-      {/* Modern Navbar (Matching Original Brand) */}
-      <nav className="relative z-50 px-10 py-8 flex justify-between items-center border-b border-white/5 bg-slate-950/50 backdrop-blur-md">
-        <Link to="/" className="text-2xl font-black tracking-tighter flex items-center gap-3">
-          <FaLeaf className="text-emerald-500" />
-          <span className="uppercase tracking-[0.2em] text-sm">Resilient Roots AI</span>
-        </Link>
-      </nav>
+      {/* Modern Navbar */}
+      <Navbar />
 
       {/* Banner Section (Modified for Visual Impact) */}
       <section className="relative h-[90vh] flex items-center justify-center text-center px-6 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={homeBg} alt="Banner" className="w-full h-full object-cover opacity-30 contrast-125 saturate-50 scale-105" />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            onTimeUpdate={(e) => {
+              if (e.target.currentTime >= 8) {
+                e.target.currentTime = 0;
+              }
+            }}
+            className="w-full h-full object-cover opacity-40 contrast-125 saturate-75 scale-105"
+          >
+            <source src="/resiliant_roots_ai.mp4" type="video/mp4" />
+            <img src={homeBg} alt="Banner" className="w-full h-full object-cover opacity-30 contrast-125 saturate-50 scale-105" />
+          </video>
           <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-transparent to-slate-950"></div>
         </div>
         
-        <div className="relative z-10 max-w-4xl">
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-6 uppercase leading-[0.9]">
-            Resilient <br /> <span className="gradient-text italic font-serif">Roots AI</span>
+        <div className="relative z-10 max-w-4xl mb-4">
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4 uppercase leading-[0.9]">
+            Resilient <br /> <span className="gradient-text italic font-serif pr-2">Roots AI</span>
           </h1>
-          <p className="text-xl text-slate-400 mb-12 italic font-light tracking-wide">
+          <p className="text-lg text-slate-400 mb-8 italic font-light tracking-wide">
             Empowering Farmers with Disease Recognition Technology
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Link to="/detect" className="btn-primary !rounded-full !px-12">
+            <Link to={authUser ? "/detect" : "/login"} className="btn-primary !rounded-full !px-12">
               Predict the Disease
             </Link>
             <a href="#feature" className="btn-secondary !rounded-full !px-12">
@@ -50,8 +68,12 @@ const Home = () => {
       </section>
 
       {/* Features Section (Preserving Original Content) */}
-      <section id="feature" className="relative z-10 py-32 px-6 bg-white/[0.02]">
-        <div className="max-w-7xl mx-auto">
+      <section id="feature" className="relative z-10 py-32 px-6 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img src="/features_bg.png" alt="Features Background" className="w-full h-full object-cover opacity-65 contrast-110 saturate-100 scale-105" />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/20 to-slate-950"></div>
+        </div>
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20 space-y-4">
             <p className="text-emerald-500 font-black tracking-[0.5em] text-xs uppercase">Features</p>
             <h2 className="text-4xl font-black uppercase tracking-tighter">Why is it useful?</h2>
@@ -76,33 +98,40 @@ const Home = () => {
       </section>
 
       {/* Services Section (Preserving Original Content) */}
-      <section id="homepg" className="relative z-10 py-32 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20 space-y-4">
-            <p className="text-emerald-500 font-black tracking-[0.5em] text-xs uppercase">Services</p>
-            <h2 className="text-4xl font-black uppercase tracking-tighter">We Provide</h2>
+      {authUser && (
+        <section id="homepg" className="relative z-10 py-32 px-6 overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <img src={servicesBg} alt="Services Background" className="w-full h-full object-cover opacity-55 contrast-125 saturate-100 scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-transparent to-slate-950/80"></div>
           </div>
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="text-center mb-20 space-y-4">
+              <p className="text-emerald-500 font-black tracking-[0.5em] text-xs uppercase">Services</p>
+              <h2 className="text-4xl font-black uppercase tracking-tighter">We Provide</h2>
+            </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { icon: <FaLeaf />, title: "Crop Disease prediction", desc: "Analyzes soil and weather data to find the best-suited crop.", link: "/detect" },
-              { icon: <FaFlask />, title: "Fertilizer Recommendation", desc: "Analyzes soil and weather data to find the best-suited crop.", link: "/fertilizer" },
-              { icon: <FaCloudSun />, title: "Weather prediction", desc: "Analyzes soil and weather data to find the best-suited crop.", link: "/weather" }
-            ].map((service, i) => (
-              <div key={i} className="glass-card text-center flex flex-col items-center group">
-                <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-3xl mb-10 group-hover:bg-emerald-500 group-hover:text-black transition-all duration-500">
-                  {service.icon}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {[
+                { icon: <FaLeaf />, title: "Crop Disease prediction", desc: "Predicts plant diseases based on uploaded leaf images.", link: "/detect", btnText: "Predict" },
+                { icon: <FaFlask />, title: "Fertilizer Recommendation", desc: "Analyzes N-P-K levels and soil parameters to recommend fertilizers.", link: "/fertilizer", btnText: "Recommend" },
+                { icon: <FaCloudSun />, title: "Weather prediction", desc: "Provides weather forecasts to optimize your farming schedules.", link: "/weather", btnText: "Check Weather" },
+                { icon: <FaHistory className="text-emerald-500" />, title: "Agricultural History", desc: "View and download your past disease diagnosis and fertilizer reports.", link: "/history", btnText: "View History" }
+              ].map((service, i) => (
+                <div key={i} className="glass-card text-center flex flex-col items-center group">
+                  <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-3xl mb-10 group-hover:bg-emerald-500 group-hover:text-black transition-all duration-500">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-xl font-black mb-4 uppercase tracking-tighter leading-tight min-h-[56px] flex items-center justify-center">{service.title}</h3>
+                  <p className="text-slate-500 text-xs mb-10 leading-relaxed min-h-[50px]">{service.desc}</p>
+                  <Link to={service.link} className="btn-primary !w-full !rounded-xl !py-4 flex items-center justify-center gap-2 mt-auto">
+                    {service.btnText} <FaArrowRight className="text-[8px]" />
+                  </Link>
                 </div>
-                <h3 className="text-xl font-black mb-4 uppercase tracking-tighter">{service.title}</h3>
-                <p className="text-slate-500 text-sm mb-10 leading-relaxed">{service.desc}</p>
-                <Link to={service.link} className="btn-primary !w-full !rounded-xl !py-4 flex items-center justify-center gap-2">
-                  Predict <FaArrowRight className="text-[8px]" />
-                </Link>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Footer (Preserving Original Content) */}
       <footer className="relative z-10 py-20 bg-slate-900/50 border-t border-white/5 px-10">

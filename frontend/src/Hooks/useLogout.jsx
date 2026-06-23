@@ -17,7 +17,7 @@ const useLogout = () => {
             if(data.error){
                 throw new Error(data.error)
             }
-            localStorage.removeItem("chat-user")
+            localStorage.removeItem("resilient-roots-user")
             setAuthUser(null)
         } catch (error) {
             toast.error(error.message)

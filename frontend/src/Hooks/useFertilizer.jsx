@@ -3,23 +3,18 @@ import { useAuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import { FLASK_API_URL } from "../config";
 
-const useReport = () => {
+const useFertilizer = () => {
   const [loading, setLoading] = useState(false);
   const { authUser } = useAuthContext();
 
-  const generateReport = async (severity, diseaseName, setReport, imageBase64 = null) => {
+  const getRecommendation = async (params, setRecommendation) => {
     setLoading(true);
     const userId = authUser?._id || "anonymous";
     try {
-      const response = await fetch(`${FLASK_API_URL}/generate-report`, {
+      const response = await fetch(`${FLASK_API_URL}/recommend-fertilizer`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          severity,
-          disease_name: diseaseName,
-          userId,
-          imageBase64,
-        }),
+        body: JSON.stringify({ ...params, userId }),
       });
 
       if (!response.ok) {
@@ -30,7 +25,7 @@ const useReport = () => {
       const data = await response.json();
       if (data.error) throw new Error(data.error);
 
-      setReport(data.report);
+      setRecommendation(data.recommendation);
 
       // Save history directly through Node.js backend
       try {
@@ -39,9 +34,9 @@ const useReport = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             userId,
-            type: "disease",
-            metadata: { diseaseName, severity, imageBase64 },
-            report: data.report
+            type: "fertilizer",
+            metadata: params,
+            report: data.recommendation
           })
         });
         if (!res.ok) {
@@ -53,14 +48,14 @@ const useReport = () => {
         toast.error(`History saving failed: ${err.message}`);
       }
     } catch (error) {
-      console.error("Error generating report:", error);
-      toast.error(`Failed to generate report: ${error.message}`);
+      console.error("Error getting fertilizer recommendation:", error);
+      toast.error(`Failed to get recommendation: ${error.message}`);
     } finally {
       setLoading(false);
     }
   };
 
-  return { loading, generateReport };
+  return { loading, getRecommendation };
 };
 
-export default useReport;
+export default useFertilizer;

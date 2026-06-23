@@ -90,3 +90,68 @@ The LLM generates a detailed and structured report using the above format. Each 
             return response.content  # Return the generated report
         except Exception as e:
             raise Exception(f"AI Error: {str(e)}")
+
+
+class FertilizerRecommender:
+    def __init__(self):
+        self.llm = ChatGroq(
+            temperature=0,
+            groq_api_key=os.getenv("GROQ_API_KEY"),
+            model_name="llama-3.3-70b-versatile"
+        )
+
+    def generate_recommendation(self, soil_temp, soil_humidity, soil_moisture, azote, phosphorous, potassium, soil_type, crop_type):
+        prompt = PromptTemplate.from_template(
+            """
+Context soil parameters for reasoning (Do NOT output the input parameters, their values, or the 'INPUT PARAMETERS' section in your response. Start directly with the '1. Soil Analysis & Diagnosis' section):
+- Crop Type: **{crop_type}**
+- Soil Type: **{soil_type}**
+- Soil Temperature: **{soil_temp}°C**
+- Soil Humidity: **{soil_humidity}%**
+- Soil Moisture: **{soil_moisture}%**
+- Nitrogen (Azote/N): **{azote} g**
+- Phosphorus (P): **{phosphorous} g**
+- Potassium (K): **{potassium} g**
+
+---
+
+1. **Soil Analysis & Diagnosis**
+   Provide a detailed paragraph analyzing the input parameters. Assess whether the Nitrogen, Phosphorus, and Potassium (N-P-K) levels and soil conditions are Deficient, Optimal, or Excess for growing {crop_type} in {soil_type} soil.
+   - N-P-K Status: AI-generated assessment of nutrient levels.
+   - Soil Condition: AI-generated assessment of moisture, temperature, and humidity.
+
+2. **Fertilizer Recommendation**
+   Provide a detailed paragraph recommending specific fertilizers (organic or inorganic, e.g., Urea, DAP, MOP, compost) to correct any deficiencies or maintain healthy levels.
+   - Recommending specific fertilizers: AI-generated recommendation.
+
+   Summarize the fertilizer application in a table:
+
+| **Fertilizer Name** | **Type (Organic/Chemical)** | **Recommended Dosage** | **Application Method** | **Timing/Frequency** |
+|---------------------|-----------------------------|------------------------|-------------------------|----------------------|
+| AI-generated name   | AI-generated type           | AI-generated dose      | AI-generated method     | AI-generated frequency |
+
+3. **Sustainable Agriculture Tips**
+   Provide bullet points with best practices for maintaining long-term soil health and maximizing yield:
+   - AI-generated tips for sustainable management.
+   - Safety and precautions when applying chemical fertilizers.
+
+            """
+        )
+
+        rendered_prompt = prompt.format(
+            crop_type=crop_type,
+            soil_type=soil_type,
+            soil_temp=soil_temp,
+            soil_humidity=soil_humidity,
+            soil_moisture=soil_moisture,
+            azote=azote,
+            phosphorous=phosphorous,
+            potassium=potassium
+        )
+
+        try:
+            response = self.llm.invoke(input=rendered_prompt)
+            return response.content
+        except Exception as e:
+            raise Exception(f"AI Error: {str(e)}")
+

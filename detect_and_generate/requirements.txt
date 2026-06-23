@@ -8,3 +8,8 @@ pillow==10.3.0               # image loading used in dlmodel.py
 langchain-groq
 langchain-core
 python-dotenv==1.0.1
+streamlit
+reportlab
+pymongo
+dnspython
+
